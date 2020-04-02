@@ -1,7 +1,6 @@
 const functions = require('firebase-functions');
 const express = require('express');
 const routes = require('./routes');
-const database = require('./database');
 
 const app = express();
 

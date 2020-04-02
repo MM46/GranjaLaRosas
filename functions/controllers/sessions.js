@@ -1,7 +1,9 @@
-
+const functions = require('firebase-functions')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { db } = require('../database');
+
+const config = functions.config()
 
 const createUser = function (req, res) {
   const body = req.body;
@@ -34,8 +36,7 @@ const login = function (req, res) {
       const user = doc.data();
       bcrypt.compare(body.pass, user.pass).then(function (match) {
         if (match) {
-          // TODO: Ocultar el screto en otro archivo.
-          const token = jwt.sign(user, "SECRETOPENDIENTE", {
+          const token = jwt.sign(user, config.bycrypt.secret, {
             expiresIn: '7 days'
           });
           user.tokens.push(token);
