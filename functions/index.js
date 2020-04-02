@@ -1,10 +1,11 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const router = require('./routes');
+const routes = require('./routes');
+const database = require('./database');
 
 const app = express();
 
 app.use(express.json());
-app.use(router);
+app.use(routes);
 
 exports.app = functions.https.onRequest(app);

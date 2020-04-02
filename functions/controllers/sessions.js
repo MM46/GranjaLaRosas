@@ -1,9 +1,7 @@
-const admin = require('firebase-admin');
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const firebase = admin.initializeApp();
-const db = firebase.firestore();
+const { db } = require('../database');
 
 const createUser = function (req, res) {
   const body = req.body;
