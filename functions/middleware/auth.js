@@ -23,8 +23,7 @@ const auth = function (req, res, next) {
 
 const admin = function (req, res, next) {
   if (req.user.admin) {
-    if (req.hasOwnProperty('username'))
-      next();
+    next();
   } else {
     return res.status(500).send('El usuario no tiene permiso de administrador');
   }
