@@ -1,4 +1,4 @@
-const { db } = require('../database');
+const { db, fieldvalue } = require('../database');
 
 const createEmployee = function (req, res) {
   const body = req.body;
@@ -22,20 +22,20 @@ const createEmployee = function (req, res) {
 }
 
 const updateSalary = function (req, res) {
-  const employee = req.managing_employee;
   const body = req.body;
-  employee.salary.push({
-    'date': body.date,
-    'amount': body.salary
+  db.collection('employees').doc(body.username).update({
+    salary: fieldvalue.arrayUnion({
+      'date': body.date,
+      'amount': body.salary
+    })
   });
-  db.collection('employees').doc(employee.username).set(employee);
-  return res.send(employee);
+  return res.send(body.salary);
 }
 
 const terminateEmployee = function (req, res) {
-  const employee = req.managing_employee;
-  employee.active = false;
-  db.collection('employees').doc(employee.username).set(employee);
+  db.collection('employees').doc(body.username).update({
+    'active': false
+  })
   return res.send(employee);
 }
 
