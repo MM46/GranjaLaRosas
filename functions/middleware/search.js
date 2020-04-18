@@ -3,7 +3,7 @@ const { db } = require('../database');
 const getManagingUser = function (req, res, next) {
   db.collection('users').doc(req.body.username).get().then(function (doc) {
     if (doc.exists) {
-      req.managing = doc.data();
+      req.managing_user = doc.data();
       next();
     } else {
       return res.status(400).send('No se encontro al usuario a administrar');
@@ -16,7 +16,7 @@ const getManagingUser = function (req, res, next) {
 const getManagingEmployee = function (req, res, next) {
   db.collection('employees').doc(req.body.username).get().then(function (doc) {
     if (doc.exists) {
-      req.managing = doc.data();
+      req.managing_employee = doc.data();
       next();
     } else {
       return res.status(400).send('No se encontro al usuario a administrar');

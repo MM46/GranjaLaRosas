@@ -113,7 +113,7 @@ const updatePassUser = function (req, res) {
 }
 
 const updatePassAdmin = function (req, res) {
-  var user = req.managing;
+  var user = req.managing_user;
   const pass = generatePassword(8, false, /[\w\d\?\-]/);
   bcrypt.hash(pass, 8).then(function (hashed_pass) {
     user.pass = hashed_pass;
