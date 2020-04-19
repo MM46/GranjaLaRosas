@@ -16,4 +16,6 @@ router.patch('/updatePassUser', auth.auth, sessions.updatePassUser);
 router.patch('/updatePassAdmin', auth.auth, auth.admin,
   sessions.updatePassAdmin);
 
+router.post('/newPayCycle', auth.auth, auth.admin, nomina_a.newPayCycle);
+
 module.exports = router;
