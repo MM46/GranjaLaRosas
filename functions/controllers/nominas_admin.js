@@ -1,7 +1,5 @@
 const { db, fieldvalue } = require('../database');
 
-const utils = require('../utils/utils');
-
 const createEmployee = function (req, res) {
   const body = req.body;
   db.collection('employees').doc(body.username).set({
@@ -57,7 +55,7 @@ const newPayCycle = function (req, res) {
             'username': employee.username,
             'amount': employee.salary[employee.salary.length - 1].amount,
             'deductions': 0,
-            'net_pay': 0,
+            'net_pay': employee.salary[employee.salary.length - 1].amount,
             'abscenses': []
           });
       }
@@ -66,9 +64,38 @@ const newPayCycle = function (req, res) {
   return res.send(body.period_end);
 }
 
+const registerAbscense = function (req, res) {
+  const body;
+  db.collection('pay_cycles').doc(body.period_end.toString())
+    .collection('employees').doc(body.username).update({
+      'abscenses': fieldvalue.arrayUnion(body.abscense_date)
+    });
+}
+
+const deleteAbscense = function (req, res) {
+  const body;
+  db.collection('pay_cycles').doc(body.period_end.toString())
+    .collection('employees').doc(body.username).update({
+      'abscenses': fieldvalue.arrayRemove(body.abscense_date)
+    });
+}
+
+const deductSalary = function (req, res) {
+  const body;
+  db.collection('pay_cycles').doc(body.period_end.toString())
+    .collection('employees').doc(body.username).set({
+      'deduction': body.deductions,
+      'net_pay': salary - body.deductions
+    }, { merge: true });
+}
+
 module.exports = {
   createEmployee: createEmployee,
   updateSalary: updateSalary,
   terminateEmployee: terminateEmployee,
-  newPayCycle: newPayCycle
+  newPayCycle: newPayCycle,
+  resetPayCycle: newPayCycle,
+  registerAbscense: registerAbscense,
+  deleteAbscense: deleteAbscense,
+  deductSalary: deductSalary
 }

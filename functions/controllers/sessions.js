@@ -92,7 +92,7 @@ const logout = function (req, res) {
   return res.send(user);
 }
 
-const updatePassUser = function (req, res) {
+const updatePass = function (req, res) {
   var user = req.user;
   const body = req.body;
   bcrypt.compare(body.old_pass, user.pass).then(function (match) {
@@ -109,7 +109,7 @@ const updatePassUser = function (req, res) {
   });
 }
 
-const updatePassAdmin = function (req, res) {
+const resetPass = function (req, res) {
   const body = req.body;
   const pass = generatePassword(8, false, /[\w\d\?\-]/);
   bcrypt.hash(pass, 8).then(function (hashed_pass) {
@@ -132,6 +132,6 @@ module.exports = {
   createUser: createUser,
   login: login,
   logout: logout,
-  updatePassUser: updatePassUser,
-  updatePassAdmin: updatePassAdmin,
+  updatePass: updatePass,
+  resetPass: resetPass,
 }
