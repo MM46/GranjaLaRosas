@@ -22,7 +22,7 @@ const auth = function (req, res, next) {
 }
 
 const admin = function (req, res, next) {
-  if (req.user.admin) {
+  if (req.user.role == 'admin') {
     next();
   } else {
     return res.status(500).send('El usuario no tiene permiso de administrador');

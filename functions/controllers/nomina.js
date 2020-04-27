@@ -56,7 +56,7 @@ const newPayCycle = function (req, res) {
             'amount': employee.salary[employee.salary.length - 1].amount,
             'deductions': 0,
             'net_pay': employee.salary[employee.salary.length - 1].amount,
-            'abscenses': []
+            'Absences': []
           });
       }
     });
@@ -64,19 +64,19 @@ const newPayCycle = function (req, res) {
   return res.send(body.period_end);
 }
 
-const registerAbscense = function (req, res) {
+const registerAbsence = function (req, res) {
   const body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'abscenses': fieldvalue.arrayUnion(body.abscense_date)
+      'Absences': fieldvalue.arrayUnion(body.Absence_date)
     });
 }
 
-const deleteAbscense = function (req, res) {
+const deleteAbsence = function (req, res) {
   const body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'abscenses': fieldvalue.arrayRemove(body.abscense_date)
+      'Absences': fieldvalue.arrayRemove(body.Absence_date)
     });
 }
 
@@ -89,13 +89,41 @@ const deductSalary = function (req, res) {
     }, { merge: true });
 }
 
+const getEmployees = function (req, res) {
+  var employees = {};
+  db.collection('employees').get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      const employee = doc.data();
+      users[employee.username] = employee;
+    });
+    return res.send(employees);
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer empleados');
+  })
+}
+
+const getPayCycles = function (req, res) {
+  var pay_cycles = {};
+  db.collection('pay_cycles').get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      const pay_cycle = doc.data();
+      users[pay_cycle.period_end.toString()] = pay_cycle;
+    });
+    return res.send(pay_cycles);
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer ciclos de pago');
+  })
+}
+
 module.exports = {
   createEmployee: createEmployee,
   updateSalary: updateSalary,
   terminateEmployee: terminateEmployee,
   newPayCycle: newPayCycle,
   resetPayCycle: newPayCycle,
-  registerAbscense: registerAbscense,
-  deleteAbscense: deleteAbscense,
-  deductSalary: deductSalary
+  registerAbsence: registerAbsence,
+  deleteAbsence: deleteAbsence,
+  deductSalary: deductSalary,
+  getEmployees: getEmployees,
+  getPayCycles: getPayCycles
 }

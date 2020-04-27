@@ -15,7 +15,7 @@ const dummyAdmin = function (req, res) {
       'username': 'admin',
       'pass': hashed_pass,
       'tokens': [],
-      'admin': true,
+      'role': 'admin',
     }
     db.collection('users').doc('admin').set(user);
     return res.send(user);
@@ -36,7 +36,7 @@ const createUser = function (req, res, next) {
           'username': body.username,
           'pass': hashed_pass,
           'tokens': [],
-          'admin': false,
+          'role': 'employee',
         });
         const user_data = {
           'username': body.username,
@@ -126,6 +126,19 @@ const resetPass = function (req, res) {
   });
 }
 
+const getUsers = function (req, res) {
+  var users = {};
+  db.collection('users').get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      const user = doc.data();
+      users[user.username] = user;
+    });
+    return res.send(users);
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer usuarios');
+  })
+}
+
 module.exports = {
   // TODO(mauriciogm97): Remove dummyAdmin before deploy.
   dummyAdmin: dummyAdmin,
@@ -134,4 +147,5 @@ module.exports = {
   logout: logout,
   updatePass: updatePass,
   resetPass: resetPass,
+  getUsers: getUsers
 }
