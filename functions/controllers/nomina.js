@@ -65,7 +65,7 @@ const newPayCycle = function (req, res) {
 }
 
 const registerAbsence = function (req, res) {
-  const body;
+  const body = req.body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
       'Absences': fieldvalue.arrayUnion(body.Absence_date)
@@ -73,7 +73,7 @@ const registerAbsence = function (req, res) {
 }
 
 const deleteAbsence = function (req, res) {
-  const body;
+  const body = req.body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
       'Absences': fieldvalue.arrayRemove(body.Absence_date)
@@ -81,7 +81,7 @@ const deleteAbsence = function (req, res) {
 }
 
 const deductSalary = function (req, res) {
-  const body;
+  const body = req.body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).set({
       'deduction': body.deductions,
