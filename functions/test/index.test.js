@@ -15,7 +15,7 @@ function dummyAdmin_test() {
   });
 }
 
-function login_admin_test() {
+function login_test(user, pass) {
   return request({
     method: 'POST',
     json: true,
@@ -24,12 +24,11 @@ function login_admin_test() {
     },
     uri: 'http://localhost:5000/login',
     body: {
-      'username': 'admin',
-      'pass': '12345678'
+      'username': user,
+      'pass': pass
     }
   }, function (err, res, body) {
     assert(err == null);
-    return body;
   });
 }
 
@@ -70,7 +69,6 @@ function resetPass_test(token) {
     }
   }, function (err, res, body) {
     assert(body.username == 'mauriciogm97');
-    return body.pass;
   });
 }
 
@@ -267,7 +265,70 @@ function getPayCycles_test(token) {
   });
 }
 
-function logout_admin_test(token) {
+function updatePass_test(token, old_pass) {
+  return request({
+    method: 'PATCH',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    uri: 'http://localhost:5000/updatePass',
+    body: {
+      'old_pass': old_pass,
+      'new_pass': '12345678'
+    }
+  }, function (err, res, body) {
+    assert(body == 'mauriciogm97');
+  });
+}
+
+function getMyUser_test(token) {
+  return request({
+    method: 'GET',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    uri: 'http://localhost:5000/getMyUser',
+    body: {}
+  }, function (err, res, body) {
+    assert(body.username == 'mauriciogm97');
+  });
+}
+
+function getMyEmployee_test(token) {
+  return request({
+    method: 'GET',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    uri: 'http://localhost:5000/getMyEmployee',
+    body: {}
+  }, function (err, res, body) {
+    assert(body.username == 'mauriciogm97');
+  });
+}
+
+function getMyPayHistory_test(token) {
+  return request({
+    method: 'GET',
+    json: true,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    uri: 'http://localhost:5000/getMyPayHistory',
+    body: {}
+  }, function (err, res, body) {
+    assert(body['20200408'] != null);
+  });
+}
+
+function logout_test(username, token) {
   return request({
     method: 'POST',
     json: true,
@@ -278,15 +339,15 @@ function logout_admin_test(token) {
     uri: 'http://localhost:5000/logout',
     body: {}
   }, function (err, res, body) {
-    assert(body.username == 'admin');
+    assert(body.username == username);
   });
 }
 
 async function runTests(tok) {
   await dummyAdmin_test();
-  const admin_token = await login_admin_test();
+  const admin_token = await login_test('admin', '12345678');
   await registerEmployee_test(admin_token);
-  const user_pass = await resetPass_test(admin_token);
+  const user_pass = (await resetPass_test(admin_token)).pass;
   await getUsers_test(admin_token);
   await updateSalary_test(admin_token);
   await terminateEmployee_test(admin_token);
@@ -298,7 +359,13 @@ async function runTests(tok) {
   await deductSalary_test(admin_token);
   await getEmployees_test(admin_token);
   await getPayCycles_test(admin_token);
-  logout_admin_test(admin_token);
+  logout_test('admin', admin_token);
+  const user_token = await login_test('mauriciogm97', user_pass);
+  await updatePass_test(user_token, user_pass);
+  await getMyUser_test(user_token);
+  await getMyEmployee_test(user_token);
+  await getMyPayHistory_test(user_token);
+  logout_test('mauriciogm97', user_token)
 }
 runTests();
 

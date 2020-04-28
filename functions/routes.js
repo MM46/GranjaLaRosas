@@ -9,6 +9,7 @@ const nomina = require('./controllers/nomina')
 router.get('/dummyAdmin', sessions.dummyAdmin);
 
 router.get('/getUsers', auth.auth, auth.admin, sessions.getUsers);
+router.get('/getMyUser', auth.auth, sessions.getMyUser);
 router.post('/registerEmployee', auth.auth, auth.admin,
   sessions.createUser, nomina.createEmployee);
 router.post('/login', sessions.login);
@@ -17,7 +18,9 @@ router.patch('/updatePass', auth.auth, sessions.updatePass);
 router.patch('/resetPass', auth.auth, auth.admin, sessions.resetPass);
 
 router.get('/getEmployees', auth.auth, auth.admin, nomina.getEmployees);
+router.get('/getMyEmployee', auth.auth, nomina.getMyEmployee);
 router.get('/getPayCycles', auth.auth, auth.admin, nomina.getPayCycles);
+router.get('/getMyPayHistory', auth.auth, nomina.getMyPayHistory);
 router.patch('/updateSalary', auth.auth, auth.admin, nomina.updateSalary);
 router.patch('/terminateEmployee', auth.auth, auth.admin,
   nomina.terminateEmployee);

@@ -139,6 +139,10 @@ const getUsers = function (req, res) {
   })
 }
 
+const getMyUser = function (req, res) {
+  return res.send(req.user);
+}
+
 module.exports = {
   // TODO(mauriciogm97): Remove dummyAdmin before deploy.
   dummyAdmin: dummyAdmin,
@@ -147,5 +151,6 @@ module.exports = {
   logout: logout,
   updatePass: updatePass,
   resetPass: resetPass,
-  getUsers: getUsers
+  getUsers: getUsers,
+  getMyUser: getMyUser
 }
