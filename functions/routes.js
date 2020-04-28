@@ -13,19 +13,20 @@ router.post('/registerEmployee', auth.auth, auth.admin,
   sessions.createUser, nomina.createEmployee);
 router.post('/login', sessions.login);
 router.post('/logout', auth.auth, sessions.logout);
-router.patch('/updatePassUser', auth.auth, sessions.updatePass);
-router.patch('/updatePassAdmin', auth.auth, auth.admin, sessions.resetPass);
+router.patch('/updatePass', auth.auth, sessions.updatePass);
+router.patch('/resetPass', auth.auth, auth.admin, sessions.resetPass);
 
 router.get('/getEmployees', auth.auth, auth.admin, nomina.getEmployees);
 router.get('/getPayCycles', auth.auth, auth.admin, nomina.getPayCycles);
 router.patch('/updateSalary', auth.auth, auth.admin, nomina.updateSalary);
 router.patch('/terminateEmployee', auth.auth, auth.admin,
   nomina.terminateEmployee);
+router.patch('/rehireEmployee', auth.auth, auth.admin, nomina.rehireEmployee);
 router.post('/newPayCycle', auth.auth, auth.admin, nomina.newPayCycle);
 router.post('/resetPayCycle', auth.auth, auth.admin, nomina.resetPayCycle);
-router.post('/registerAbsence', auth.auth, auth.admin,
+router.patch('/registerAbsence', auth.auth, auth.admin,
   nomina.registerAbsence);
-router.post('/deleteAbsence', auth.auth, auth.admin, nomina.deleteAbsence);
-router.post('/deductSalary', auth.auth, auth.admin, nomina.deductSalary);
+router.patch('/deleteAbsence', auth.auth, auth.admin, nomina.deleteAbsence);
+router.patch('/deductSalary', auth.auth, auth.admin, nomina.deductSalary);
 
 module.exports = router;

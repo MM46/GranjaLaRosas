@@ -28,14 +28,23 @@ const updateSalary = function (req, res) {
       'amount': body.salary
     })
   });
-  return res.send(body.salary);
+  return res.send(body.salary.toString());
 }
 
 const terminateEmployee = function (req, res) {
+  const body = req.body;
   db.collection('employees').doc(body.username).update({
     'active': false
   })
-  return res.send(employee);
+  return res.send(body.username);
+}
+
+const rehireEmployee = function (req, res) {
+  const body = req.body;
+  db.collection('employees').doc(body.username).update({
+    'active': true
+  })
+  return res.send(body.username);
 }
 
 const newPayCycle = function (req, res) {
@@ -56,37 +65,48 @@ const newPayCycle = function (req, res) {
             'amount': employee.salary[employee.salary.length - 1].amount,
             'deductions': 0,
             'net_pay': employee.salary[employee.salary.length - 1].amount,
-            'Absences': []
+            'absences': []
           });
       }
     });
   });
-  return res.send(body.period_end);
+  return res.send(body.period_end.toString());
 }
 
 const registerAbsence = function (req, res) {
   const body = req.body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'Absences': fieldvalue.arrayUnion(body.Absence_date)
+      'absences': fieldvalue.arrayUnion(body.absence_date)
     });
+  return res.send(body.absence_date.toString());
 }
 
 const deleteAbsence = function (req, res) {
   const body = req.body;
   db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'Absences': fieldvalue.arrayRemove(body.Absence_date)
+      'absences': fieldvalue.arrayRemove(body.absence_date)
     });
+  return res.send(body.absence_date.toString());
 }
 
 const deductSalary = function (req, res) {
   const body = req.body;
+  var deductions;
   db.collection('pay_cycles').doc(body.period_end.toString())
-    .collection('employees').doc(body.username).set({
-      'deduction': body.deductions,
-      'net_pay': salary - body.deductions
-    }, { merge: true });
+    .collection('employees').doc(body.username).get().then(function (doc) {
+      const employee = doc.data();
+      const net_pay = employee.amount - body.deductions;
+      db.collection('pay_cycles').doc(body.period_end.toString())
+        .collection('employees').doc(body.username).update({
+          'deduction': body.deductions,
+          'net_pay': net_pay
+        });
+      return res.send(net_pay.toString());
+    }).catch(function (err) {
+      return res.status(500).send('Error al traer empleado');
+    });
 }
 
 const getEmployees = function (req, res) {
@@ -94,7 +114,9 @@ const getEmployees = function (req, res) {
   db.collection('employees').get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
       const employee = doc.data();
-      users[employee.username] = employee;
+      if (employee.active) {
+        employees[employee.username] = employee;
+      }
     });
     return res.send(employees);
   }).catch(function (_) {
@@ -107,7 +129,7 @@ const getPayCycles = function (req, res) {
   db.collection('pay_cycles').get().then(function (querySnapshot) {
     querySnapshot.forEach(function (doc) {
       const pay_cycle = doc.data();
-      users[pay_cycle.period_end.toString()] = pay_cycle;
+      pay_cycles[pay_cycle.period_end.toString()] = pay_cycle;
     });
     return res.send(pay_cycles);
   }).catch(function (_) {
@@ -119,6 +141,7 @@ module.exports = {
   createEmployee: createEmployee,
   updateSalary: updateSalary,
   terminateEmployee: terminateEmployee,
+  rehireEmployee: rehireEmployee,
   newPayCycle: newPayCycle,
   resetPayCycle: newPayCycle,
   registerAbsence: registerAbsence,
