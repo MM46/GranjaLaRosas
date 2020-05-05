@@ -1,4 +1,5 @@
 const { db, fieldvalue } = require('../database');
+const { promisify } = require('util')
 
 const createEmployee = function (req, res) {
   const body = req.body;
@@ -150,26 +151,35 @@ const getMyPayHistory = function (req, res) {
   const username = req.user.username;
   var pay_history = {};
   db.collection('pay_cycles').get().then(function (querySnapshot) {
-    querySnapshot.forEach(function (doc) {
-      const pay_cycle = doc.data();
-      const period_end_str = pay_cycle.period_end.toString()
-      db.collection('pay_cycles').doc(period_end_str)
-        .collection('employees').doc(username).get().then(function (doc) {
-          const employee = doc.data();
-          pay_history[period_end_str] = {
-            'period_start': pay_cycle.period_start,
-            'period_end': pay_cycle.period_end,
-            'pay_date': pay_cycle.pay_date,
-            'amount': employee.amount,
-            'deductions': employee.deductions,
-            'net_pay': employee.net_pay,
-            'absences': employee.absences
-          }
-          res.send(pay_history);
-        });
+    var index = 1;
+    const aux = new Promise(function (resolve, reject) {
+      querySnapshot.forEach(function (doc) {
+        const pay_cycle = doc.data();
+        const period_end_str = pay_cycle.period_end.toString();
+        db.collection('pay_cycles').doc(period_end_str)
+          .collection('employees').doc(username).get().then(function (doc) {
+            const employee = doc.data();
+            pay_history[period_end_str] = {
+              'period_start': pay_cycle.period_start,
+              'period_end': pay_cycle.period_end,
+              'pay_date': pay_cycle.pay_date,
+              'amount': employee.amount,
+              'deductions': employee.deductions,
+              'net_pay': employee.net_pay,
+              'absences': employee.absences
+            }
+            if (index == querySnapshot.size) {
+              resolve();
+            }
+            index = index + 1;
+          });
+      });
     });
+    aux.then(function () {
+      return res.send(pay_history);
+    })
   }).catch(function (_) {
-    res.status(500).send('Error al leer los ciclos de pago');
+    return res.status(500).send('Error al leer los ciclos de pago');
   });
 }
 
