@@ -8,6 +8,7 @@ const concepts = require('./controllers/concepts');
 const siembras = require('./controllers/siembras');
 
 const concept_reports = require('./controllers/concept_reports');
+const siembra_reports = require('./controllers/siembra_reports');
 
 // TODO(mauriciogm97): Remove before deploy.
 router.get('/dummyAdmin', sessions.dummyAdmin);
@@ -56,5 +57,12 @@ router.get('/getEarningsReport', auth.auth, auth.admin,
   concept_reports.getEarningsReport);
 router.get('/getExpensesReport', auth.auth, auth.admin,
   concept_reports.getExpensesReport);
+
+router.get('/getSiembrasBySeason', auth.auth, auth.admin,
+  siembra_reports.getSiembrasBySeason);
+router.get('/getSiembrasByPlantingDate', auth.auth, auth.admin,
+  siembra_reports.getSiembrasByPlantingDate);
+router.get('/getSiembrasByHarvestDate', auth.auth, auth.admin,
+  siembra_reports.getSiembrasByHarvestDate);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const concepts = require('./concepts.test');
 const sembradios = require('./siembras.test');
 
 const concept_reports = require('./concept_reports.test');
+const siembra_reports = require('./siembra_reports.test')
 
 async function runTests() {
   await sessions.dummyAdmin();
@@ -17,6 +18,7 @@ async function runTests() {
   await sembradios.runTests(admin_token);
 
   await concept_reports.runTests(admin_token);
+  await siembra_reports.runTests(admin_token);
 
   sessions.logout('admin', admin_token);
   sessions.logout('mauriciogm97', user_token);
