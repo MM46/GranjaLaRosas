@@ -27,23 +27,25 @@ function addSiembra(req, res) {
 }
 
 function removeSiembraAux(body) {
-  db.collection('siembras').doc(body.season).set({
-    'array': fieldvalue.arrayRemove({
-      'season': body.season,
-      'seed': body.seed,
-      'planting_date': body.planting_date,
-      'harvest_date': body.harvest_date,
-      'progress': body.progress
-    })
-  }, { merge: true }).then(function () {
-    resolve(body.planting_date.toString())
-  }).catch(function (_) {
-    reject("Error al acceder base de datos");
+  return new Promise(function (resolve, reject) {
+    db.collection('siembras').doc(body.season).set({
+      'array': fieldvalue.arrayRemove({
+        'season': body.season,
+        'seed': body.seed,
+        'planting_date': body.planting_date,
+        'harvest_date': body.harvest_date,
+        'progress': body.progress
+      })
+    }, { merge: true }).then(function () {
+      resolve(body.planting_date.toString())
+    }).catch(function (_) {
+      reject("Error al acceder base de datos");
+    });
   });
 }
 
 function removeSiembra(req, res) {
-  removeSiembraAux.then(function (data) {
+  removeSiembraAux(req.body).then(function (data) {
     return res.send(data);
   }).catch(function (err) {
     return res.status(500).send(err);
