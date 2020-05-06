@@ -14,7 +14,7 @@ function addConceptAux(body) {
       resolve(date_str);
     }).catch(function (_) {
       reject("Error al acceder base de datos");
-    })
+    });
   });
 }
 

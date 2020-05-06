@@ -1,21 +1,32 @@
 const { db, fieldvalue } = require('../database');
 
-function addSiembra(req, res) {
-  const body = req.body;
-  db.collection('siembras').doc(body.season).set({
-    'array': fieldvalue.arrayUnion({
-      'season': body.season,
-      'seed': body.seed,
-      'planting_date': body.planting_date,
-      'harvest_date': body.harvest_date,
-      'progress': body.progress
-    })
-  }, { merge: true });
-  return res.send(body.planting_date.toString())
+function addSiembraAux(body) {
+  return new Promise(function (resolve, reject) {
+    db.collection('siembras').doc(body.season).set({
+      'array': fieldvalue.arrayUnion({
+        'season': body.season,
+        'seed': body.seed,
+        'planting_date': body.planting_date,
+        'harvest_date': body.harvest_date,
+        'progress': body.progress
+      })
+    }, { merge: true }).then(function () {
+      resolve(body.planting_date.toString());
+    }).catch(function (_) {
+      reject("Error al acceder base de datos");
+    });
+  });
 }
 
-function removeSiembra(req, res) {
-  const body = req.body;
+function addSiembra(req, res) {
+  addSiembraAux(req.body).then(function (data) {
+    return res.send(data);
+  }).catch(function (err) {
+    return res.status(500).send(err);
+  });
+}
+
+function removeSiembraAux(body) {
   db.collection('siembras').doc(body.season).set({
     'array': fieldvalue.arrayRemove({
       'season': body.season,
@@ -24,15 +35,33 @@ function removeSiembra(req, res) {
       'harvest_date': body.harvest_date,
       'progress': body.progress
     })
-  }, { merge: true });
-  return res.send(body.planting_date.toString());
+  }, { merge: true }).then(function () {
+    resolve(body.planting_date.toString())
+  }).catch(function (_) {
+    reject("Error al acceder base de datos");
+  });
+}
+
+function removeSiembra(req, res) {
+  removeSiembraAux.then(function (data) {
+    return res.send(data);
+  }).catch(function (err) {
+    return res.status(500).send(err);
+  })
 }
 
 function updateSiembra(req, res) {
   const body = req.body;
   if (body.old.season != body.new.season) {
-    addSiembra({ 'body': body.new }, res);
-    removeSiembra({ 'body': body.old }, res);
+    removeSiembraAux(body.old).then(function (_) {
+      addSiembraAux(body.new).then(function (data) {
+        return res.send(data);
+      }).catch(function (err) {
+        return res.status(500).send(500);
+      });
+    }).catch(function (err) {
+      return res.status(500).send(500);
+    });
   } else {
     db.collection('siembras').doc(body.old.season).get().then(function (doc) {
       var array = doc.data().array;
