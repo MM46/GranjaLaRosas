@@ -1,38 +1,69 @@
 const { db, fieldvalue } = require('../database');
 
-function addConcept(req, res) {
-  const body = req.body;
-  const date_str = body.date.toString();
-  db.collection('concepts').doc(date_str).set({
-    'array': fieldvalue.arrayUnion({
-      'date': body.date,
-      'description': body.description,
-      'cost': body.cost,
-      'earning': body.earning
+function addConceptAux(body) {
+  return new Promise(function (resolve, reject) {
+    const date_str = body.date.toString();
+    db.collection('concepts').doc(date_str).set({
+      'array': fieldvalue.arrayUnion({
+        'date': body.date,
+        'description': body.description,
+        'cost': body.cost,
+        'earning': body.earning
+      })
+    }, { merge: true }).then(function () {
+      resolve(date_str);
+    }).catch(function (_) {
+      reject("Error al acceder base de datos");
     })
-  }, { merge: true });
-  return res.send(date_str)
+  });
+}
+
+function addConcept(req, res) {
+  addConceptAux(req.body).then(function (data) {
+    return res.send(data);
+  }).catch(function (err) {
+    return res.status(500).send(date_str)
+  });
+}
+
+function removeConceptAux(body) {
+  return new Promise(function (resolve, reject) {
+    const date_str = body.date.toString();
+    db.collection('concepts').doc(date_str).set({
+      'array': fieldvalue.arrayRemove({
+        'date': body.date,
+        'description': body.description,
+        'cost': body.cost,
+        'earning': body.earning
+      })
+    }, { merge: true }).then(function () {
+      resolve(date_str)
+    }).catch(function (_) {
+      reject('Error al acceder base de datos');
+    });
+  });
 }
 
 function removeConcept(req, res) {
-  const body = req.body;
-  const date_str = body.date.toString();
-  db.collection('concepts').doc(date_str).set({
-    'array': fieldvalue.arrayRemove({
-      'date': body.date,
-      'description': body.description,
-      'cost': body.cost,
-      'earning': body.earning
-    })
-  }, { merge: true });
-  return res.send(date_str);
+  removeConceptAux(req.body).then(function (data) {
+    return res.send(data);
+  }).catch(function (err) {
+    return res.status(500).send(err);
+  });
 }
 
 function updateConcept(req, res) {
   const body = req.body;
   if (body.old.date != body.new.date) {
-    addConcept({ 'body': body.new }, res);
-    removeConcept({ 'body': body.old }, res);
+    removeConceptAux(body.old).then(function (_) {
+      addConceptAux(body.new).then(function (data) {
+        return res.send(data);
+      }).catch(function (err) {
+        return res.status(500).send(err);
+      });
+    }).catch(function (err) {
+      return res.status(500).send(err);
+    });
   } else {
     const date_str = body.old.date.toString();
     db.collection('concepts').doc(date_str).get().then(function (doc) {

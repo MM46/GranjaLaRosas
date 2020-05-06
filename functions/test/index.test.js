@@ -11,10 +11,10 @@ async function runTests() {
   const user_pass = (await sessions.registerEmployee(admin_token)).pass;
   const user_token = await sessions.login('mauriciogm97', user_pass);
 
-  //await sessions.runTests(admin_token, user_token, user_pass);
-  //await nomina.runTests(admin_token, user_token);
-  //await concepts.runTests(admin_token);
-  //await sembradios.runTests(admin_token);
+  await sessions.runTests(admin_token, user_token, user_pass);
+  await nomina.runTests(admin_token, user_token);
+  await concepts.runTests(admin_token);
+  await sembradios.runTests(admin_token);
 
   await concept_reports.runTests(admin_token);
 
