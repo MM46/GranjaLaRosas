@@ -5,7 +5,7 @@ const auth = require('./middleware/auth');
 const sessions = require('./controllers/sessions');
 const nomina = require('./controllers/nomina');
 const concepts = require('./controllers/concepts');
-const siembras = require('./controllers/sembradios');
+const siembras = require('./controllers/siembras');
 
 const concept_reports = require('./controllers/concept_reports');
 

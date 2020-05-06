@@ -1,7 +1,7 @@
 const sessions = require('./sessions.test');
 const nomina = require('./nomina.test');
 const concepts = require('./concepts.test');
-const sembradios = require('./sembradios.test');
+const sembradios = require('./siembras.test');
 
 const concept_reports = require('./concept_reports.test');
 
