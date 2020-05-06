@@ -1,7 +1,7 @@
 const request = require('request-promise');
 const assert = require('assert');
 
-function addExpense_test(token) {
+function addConcept_test(token) {
   return request({
     method: 'POST',
     json: true,
@@ -9,7 +9,7 @@ function addExpense_test(token) {
       'Content-Type': 'application/json',
       'Authorization': token
     },
-    uri: 'http://localhost:5000/addExpense',
+    uri: 'http://localhost:5000/addConcept',
     body: {
       'date': 20200420,
       'description': '50kg Semillas de frijol',
@@ -20,7 +20,7 @@ function addExpense_test(token) {
   });
 }
 
-function updateExpense_date_test(token) {
+function updateConcept_date_test(token) {
   return request({
     method: 'PATCH',
     json: true,
@@ -28,7 +28,7 @@ function updateExpense_date_test(token) {
       'Content-Type': 'application/json',
       'Authorization': token
     },
-    uri: 'http://localhost:5000/updateExpense',
+    uri: 'http://localhost:5000/updateConcept',
     body: {
       'old': {
         'date': 20200420,
@@ -46,7 +46,7 @@ function updateExpense_date_test(token) {
   });
 }
 
-function updateExpense_test(token) {
+function updateConcept_test(token) {
   return request({
     method: 'PATCH',
     json: true,
@@ -54,7 +54,7 @@ function updateExpense_test(token) {
       'Content-Type': 'application/json',
       'Authorization': token
     },
-    uri: 'http://localhost:5000/updateExpense',
+    uri: 'http://localhost:5000/updateConcept',
     body: {
       'old': {
         'date': 20200421,
@@ -72,7 +72,7 @@ function updateExpense_test(token) {
   });
 }
 
-function getExpenses_test(token) {
+function getConcepts_test(token) {
   return request({
     method: 'GET',
     json: true,
@@ -80,14 +80,14 @@ function getExpenses_test(token) {
       'Content-Type': 'application/json',
       'Authorization': token
     },
-    uri: 'http://localhost:5000/getExpenses',
+    uri: 'http://localhost:5000/getConcepts',
     body: {}
   }, function (err, res, body) {
     assert(body[20200421] != null);
   });
 }
 
-function removeExpense_test(token) {
+function removeConcept_test(token) {
   return request({
     method: 'PATCH',
     json: true,
@@ -95,7 +95,7 @@ function removeExpense_test(token) {
       'Content-Type': 'application/json',
       'Authorization': token
     },
-    uri: 'http://localhost:5000/removeExpense',
+    uri: 'http://localhost:5000/removeConcept',
     body: {
       'date': 20200421,
       'description': '100kg Semillas de frijol',
@@ -108,11 +108,11 @@ function removeExpense_test(token) {
 
 function runTests(admin_token) {
   return new Promise(async function (resolve, reject) {
-    await addExpense_test(admin_token);
-    await updateExpense_date_test(admin_token);
-    await updateExpense_test(admin_token);
-    await getExpenses_test(admin_token);
-    removeExpense_test(admin_token);
+    await addConcept_test(admin_token);
+    await updateConcept_date_test(admin_token);
+    await updateConcept_test(admin_token);
+    await getConcepts_test(admin_token);
+    removeConcept_test(admin_token);
     resolve(0);
   });
 }

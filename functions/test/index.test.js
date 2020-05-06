@@ -1,6 +1,6 @@
 const sessions = require('./sessions.test')
 const nomina = require('./nomina.test')
-const gastos = require('./gastos.test')
+const gastos = require('./concepts.test')
 const sembradios = require('./sembradios.test')
 
 async function runTests() {

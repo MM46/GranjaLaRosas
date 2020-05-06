@@ -4,7 +4,7 @@ const auth = require('./middleware/auth');
 
 const sessions = require('./controllers/sessions');
 const nomina = require('./controllers/nomina');
-const gastos = require('./controllers/gastos');
+const gastos = require('./controllers/concepts');
 const siembras = require('./controllers/sembradios');
 
 // TODO(mauriciogm97): Remove before deploy.
@@ -34,10 +34,10 @@ router.patch('/registerAbsence', auth.auth, auth.admin,
 router.patch('/deleteAbsence', auth.auth, auth.admin, nomina.deleteAbsence);
 router.patch('/deductSalary', auth.auth, auth.admin, nomina.deductSalary);
 
-router.get('/getExpenses', auth.auth, auth.admin, gastos.getExpenses);
-router.post('/addExpense', auth.auth, auth.admin, gastos.addExpense);
-router.patch('/removeExpense', auth.auth, auth.admin, gastos.removeExpense);
-router.patch('/updateExpense', auth.auth, auth.admin, gastos.updateExpense);
+router.get('/getConcepts', auth.auth, auth.admin, gastos.getConcepts);
+router.post('/addConcept', auth.auth, auth.admin, gastos.addConcept);
+router.patch('/removeConcept', auth.auth, auth.admin, gastos.removeConcept);
+router.patch('/updateConcept', auth.auth, auth.admin, gastos.updateConcept);
 
 router.get('/getSiembras', auth.auth, auth.admin, siembras.getSiembras);
 router.post('/addSiembra', auth.auth, auth.admin, siembras.addSiembra);
