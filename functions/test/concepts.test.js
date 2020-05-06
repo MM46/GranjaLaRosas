@@ -13,7 +13,8 @@ function addConcept_test(token) {
     body: {
       'date': 20200420,
       'description': '50kg Semillas de frijol',
-      'cost': 1000
+      'cost': 1000,
+      'earning': true
     }
   }, function (err, res, body) {
     assert(body == 20200420);
@@ -33,12 +34,14 @@ function updateConcept_date_test(token) {
       'old': {
         'date': 20200420,
         'description': '50kg Semillas de frijol',
-        'cost': 1000
+        'cost': 1000,
+        'earning': true
       },
       'new': {
         'date': 20200421,
         'description': '50kg Semillas de frijol',
-        'cost': 1000
+        'cost': 1000,
+        'earning': true
       }
     }
   }, function (err, res, body) {
@@ -59,12 +62,14 @@ function updateConcept_test(token) {
       'old': {
         'date': 20200421,
         'description': '50kg Semillas de frijol',
-        'cost': 1000
+        'cost': 1000,
+        'earning': true
       },
       'new': {
         'date': 20200421,
         'description': '100kg Semillas de frijol',
-        'cost': 1001
+        'cost': 1001,
+        'earning': true
       }
     }
   }, function (err, res, body) {
@@ -99,7 +104,8 @@ function removeConcept_test(token) {
     body: {
       'date': 20200421,
       'description': '100kg Semillas de frijol',
-      'cost': 1001
+      'cost': 1001,
+      'earning': true
     }
   }, function (err, res, body) {
     assert(body == 20200421);

@@ -7,7 +7,8 @@ function addConcept(req, res) {
     'array': fieldvalue.arrayUnion({
       'date': body.date,
       'description': body.description,
-      'cost': body.cost
+      'cost': body.cost,
+      'earning': body.earning
     })
   }, { merge: true });
   return res.send(date_str)
@@ -20,7 +21,8 @@ function removeConcept(req, res) {
     'array': fieldvalue.arrayRemove({
       'date': body.date,
       'description': body.description,
-      'cost': body.cost
+      'cost': body.cost,
+      'earning': body.earning
     })
   }, { merge: true });
   return res.send(date_str);
@@ -50,6 +52,9 @@ function updateConcept(req, res) {
   }
 }
 
+/**
+ * @deprecated Use report functions from ./concept_reports.js
+ */
 function getConcepts(req, res) {
   var unordered_concepts = {};
   var ordered_concepts = {};

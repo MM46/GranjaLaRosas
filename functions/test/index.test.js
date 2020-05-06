@@ -1,7 +1,9 @@
-const sessions = require('./sessions.test')
-const nomina = require('./nomina.test')
-const gastos = require('./concepts.test')
-const sembradios = require('./sembradios.test')
+const sessions = require('./sessions.test');
+const nomina = require('./nomina.test');
+const concepts = require('./concepts.test');
+const sembradios = require('./sembradios.test');
+
+const concept_reports = require('./concept_reports.test');
 
 async function runTests() {
   await sessions.dummyAdmin();
@@ -9,10 +11,12 @@ async function runTests() {
   const user_pass = (await sessions.registerEmployee(admin_token)).pass;
   const user_token = await sessions.login('mauriciogm97', user_pass);
 
-  await sessions.runTests(admin_token, user_token, user_pass);
-  await nomina.runTests(admin_token, user_token);
-  await gastos.runTests(admin_token);
-  await sembradios.runTests(admin_token);
+  //await sessions.runTests(admin_token, user_token, user_pass);
+  //await nomina.runTests(admin_token, user_token);
+  //await concepts.runTests(admin_token);
+  //await sembradios.runTests(admin_token);
+
+  await concept_reports.runTests(admin_token);
 
   sessions.logout('admin', admin_token);
   sessions.logout('mauriciogm97', user_token);
