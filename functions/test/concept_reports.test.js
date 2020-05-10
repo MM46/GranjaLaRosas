@@ -69,7 +69,9 @@ function getConceptsReport_test(token) {
           'earning': true
         }
       ],
-      'total': 1000
+      'net': 1000,
+      'earnings': 3000,
+      'expenses': 2000
     })) == 0);
   });
 }
@@ -97,7 +99,9 @@ function getEarningsReport_test(token) {
           'earning': true
         }
       ],
-      'total': 3000
+      'net': 3000,
+      'earnings': 3000,
+      'expenses': 0
     })) == 0);
   });
 }
@@ -125,7 +129,9 @@ function getExpensesReport_test(token, body, expected_res) {
           'earning': false
         }
       ],
-      'total': -2000
+      'net': -2000,
+      'earnings': 0,
+      'expenses': 2000
     })) == 0);
   });
 }

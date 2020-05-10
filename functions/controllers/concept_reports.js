@@ -3,17 +3,18 @@ const { db } = require('../database');
 function getAndFilterConcepts(earnings, expenses, body) {
   return new Promise(function (resolve, reject) {
     var concepts = [];
-    var total = 0;
+    var acum_expenses = 0;
+    var acum_earnings = 0;
     db.collection('concepts').get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
         const array = doc.data().array;
         if (doc.id >= body.from && doc.id <= body.to) {
           for (var x = 0; x < array.length; x++) {
             if (array[x].earning && earnings) {
-              total = total + array[x].cost;
+              acum_earnings = acum_earnings + array[x].cost;
               concepts.push(array[x]);
             } else if (!(array[x].earning) && expenses) {
-              total = total - array[x].cost;
+              acum_expenses = acum_expenses + array[x].cost;
               concepts.push(array[x]);
             }
           }
@@ -23,7 +24,9 @@ function getAndFilterConcepts(earnings, expenses, body) {
         'concepts': concepts.sort(function (a, b) {
           return a.date - b.date;
         }),
-        'total': total
+        'net': acum_earnings - acum_expenses,
+        'earnings': acum_earnings,
+        'expenses': acum_expenses
       });
     }).catch(function (_) {
       reject('Error al leer conceptos');
