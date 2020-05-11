@@ -25,10 +25,10 @@ router.post('/logout', auth.auth, sessions.logout);
 router.patch('/updatePass', auth.auth, sessions.updatePass);
 router.patch('/resetPass', auth.auth, auth.admin, sessions.resetPass);
 
-router.get('/getEmployees', auth.auth, auth.admin, nomina.getEmployees);
-router.get('/getMyEmployee', auth.auth, nomina.getMyEmployee);
-router.get('/getPayCycles', auth.auth, auth.admin, nomina.getPayCycles);
-router.get('/getMyPayHistory', auth.auth, nomina.getMyPayHistory);
+// router.get('/getEmployees', auth.auth, auth.admin, nomina.getEmployees);
+// router.get('/getMyEmployee', auth.auth, nomina.getMyEmployee);
+// router.get('/getPayCycles', auth.auth, auth.admin, nomina.getPayCycles);
+// router.get('/getMyPayHistory', auth.auth, nomina.getMyPayHistory);
 router.patch('/updateSalary', auth.auth, auth.admin, nomina.updateSalary);
 router.patch('/terminateEmployee', auth.auth, auth.admin,
   nomina.terminateEmployee);

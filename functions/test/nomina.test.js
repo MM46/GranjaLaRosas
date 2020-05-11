@@ -219,10 +219,10 @@ function runTests(admin_token, user_token) {
     await registerAbsence_test(admin_token);
     await deleteAbsence_test(admin_token);
     await deductSalary_test(admin_token);
-    await getEmployees_test(admin_token);
-    await getPayCycles_test(admin_token);
-    await getMyPayHistory_test(user_token);
-    await getMyEmployee_test(user_token);
+    // await getEmployees_test(admin_token);
+    // await getPayCycles_test(admin_token);
+    // await getMyPayHistory_test(user_token);
+    // await getMyEmployee_test(user_token);
     resolve(0);
   });
 }
