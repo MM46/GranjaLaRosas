@@ -9,6 +9,7 @@ const siembras = require('./controllers/siembras');
 
 const concept_reports = require('./controllers/concept_reports');
 const siembra_reports = require('./controllers/siembra_reports');
+const nomina_reports = require('./controllers/nomina_reports');
 
 // TODO(mauriciogm97): Remove before deploy.
 router.get('/dummyAdmin', sessions.dummyAdmin);
@@ -64,5 +65,26 @@ router.get('/getSiembrasByPlantingDate', auth.auth, auth.admin,
   siembra_reports.getSiembrasByPlantingDate);
 router.get('/getSiembrasByHarvestDate', auth.auth, auth.admin,
   siembra_reports.getSiembrasByHarvestDate);
+
+router.get('/getAllEmployees', auth.auth, auth.admin,
+  nomina_reports.getAllEmployees);
+router.get('/getEmployeesByNameInitial', auth.auth, auth.admin,
+  nomina_reports.getEmployeesByNameInitial);
+router.get('/getEmployeesByLastNameInitial', auth.auth, auth.admin,
+  nomina_reports.getEmployeesByLastNameInitial);
+router.get('/getEmployeesByName', auth.auth, auth.admin,
+  nomina_reports.getEmployeesByName);
+router.get('/getEmployeesByLastName', auth.auth, auth.admin,
+  nomina_reports.getEmployeesByLastName);
+router.get('/getMyEmployee', auth.auth, nomina_reports.getMyEmployee);
+router.get('/getAllPayCycles', auth.auth, auth.admin,
+  nomina_reports.getAllPayCycles);
+router.get('/getPayCyclesByDateRange', auth.auth, auth.admin,
+  nomina_reports.getPayCyclesByDateRange);
+router.get('/getMyFullPayHistory', auth.auth,
+  nomina_reports.getMyFullPayHistory);
+router.get('/getMyPayHistoryByDateRange', auth.auth,
+  nomina_reports.getMyPayHistoryByDateRange);
+
 
 module.exports = router;

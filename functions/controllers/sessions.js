@@ -11,7 +11,6 @@ const dummyAdmin = function (req, res) {
   const pass = '12345678';
   bcrypt.hash(pass, 8).then(function (hashed_pass) {
     const user = {
-      'name': 'Admin',
       'username': 'admin',
       'pass': hashed_pass,
       'tokens': [],
@@ -34,6 +33,9 @@ const createUser = function (req, res, next) {
       bcrypt.hash(pass, 8).then(function (hashed_pass) {
         db.collection('users').doc(body.username).set({
           'username': body.username,
+          'name': body.name.toUpperCase(),
+          'lastname1': body.lastname1.toUpperCase(),
+          'lastname2': body.lastname2.toUpperCase(),
           'pass': hashed_pass,
           'tokens': [],
           'role': 'employee',
@@ -49,7 +51,7 @@ const createUser = function (req, res, next) {
       });
     }
   }).catch(function (_) {
-    return res.status(500).send('Error al consultar tabla de usuarios');
+    return res.status(500).send('Error al acceder base de datos');
   });
 }
 
@@ -79,7 +81,7 @@ const login = function (req, res) {
       return res.status(400).send('Credenciales inválidas');
     }
   }).catch(function (_) {
-    return res.status(500).send('Error al consultar base de datos de usuario');
+    return res.status(500).send('Error al acceder base de datos');
   })
 }
 
@@ -135,7 +137,7 @@ const getUsers = function (req, res) {
     });
     return res.send(users);
   }).catch(function (_) {
-    return res.status(500).send('Error al leer usuarios');
+    return res.status(500).send('Error al acceder base de datos');
   })
 }
 

@@ -1,13 +1,12 @@
 const { db, fieldvalue } = require('../database');
-const { promisify } = require('util')
 
 const createEmployee = function (req, res) {
   const body = req.body;
   db.collection('employees').doc(body.username).set({
     'username': body.username,
-    'name': body.name,
-    'lastname1': body.lastname1,
-    'lastname2': body.lastname2,
+    'name': body.name.toUpperCase(),
+    'lastname1': body.lastname1.toUpperCase(),
+    'lastname2': body.lastname2.toUpperCase(),
     'birth_date': body.birth_date,
     'hire_date': body.hire_date,
     'active': true,
@@ -62,6 +61,7 @@ const newPayCycle = function (req, res) {
       if (employee.active) {
         db.collection('pay_cycles').doc(str_period_end).collection('employees')
           .doc(employee.username).set({
+            'name': employee.name + ' ' + employee.lastname1,
             'username': employee.username,
             'amount': employee.salary[employee.salary.length - 1].amount,
             'deductions': 0,
