@@ -43,7 +43,7 @@ async function addConcepts(token) {
 
 function getConceptsReport_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ function getConceptsReport_test(token) {
 
 function getEarningsReport_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ function getEarningsReport_test(token) {
 
 function getExpensesReport_test(token, body, expected_res) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',

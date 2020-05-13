@@ -52,38 +52,38 @@ router.patch('/updateSiembra', auth.auth, auth.admin, siembras.updateSiembra);
 
 // Report endpoints.
 
-router.get('/getConceptsReport', auth.auth, auth.admin,
+router.post('/getConceptsReport', auth.auth, auth.admin,
   concept_reports.getConceptsReport);
-router.get('/getEarningsReport', auth.auth, auth.admin,
+router.post('/getEarningsReport', auth.auth, auth.admin,
   concept_reports.getEarningsReport);
-router.get('/getExpensesReport', auth.auth, auth.admin,
+router.post('/getExpensesReport', auth.auth, auth.admin,
   concept_reports.getExpensesReport);
 
-router.get('/getSiembrasBySeason', auth.auth, auth.admin,
+router.post('/getSiembrasBySeason', auth.auth, auth.admin,
   siembra_reports.getSiembrasBySeason);
-router.get('/getSiembrasByPlantingDate', auth.auth, auth.admin,
+router.post('/getSiembrasByPlantingDate', auth.auth, auth.admin,
   siembra_reports.getSiembrasByPlantingDate);
-router.get('/getSiembrasByHarvestDate', auth.auth, auth.admin,
+router.post('/getSiembrasByHarvestDate', auth.auth, auth.admin,
   siembra_reports.getSiembrasByHarvestDate);
 
 router.get('/getAllEmployees', auth.auth, auth.admin,
   nomina_reports.getAllEmployees);
-router.get('/getEmployeesByNameInitial', auth.auth, auth.admin,
+router.post('/getEmployeesByNameInitial', auth.auth, auth.admin,
   nomina_reports.getEmployeesByNameInitial);
-router.get('/getEmployeesByLastNameInitial', auth.auth, auth.admin,
+router.post('/getEmployeesByLastNameInitial', auth.auth, auth.admin,
   nomina_reports.getEmployeesByLastNameInitial);
-router.get('/getEmployeesByName', auth.auth, auth.admin,
+router.post('/getEmployeesByName', auth.auth, auth.admin,
   nomina_reports.getEmployeesByName);
-router.get('/getEmployeesByLastName', auth.auth, auth.admin,
+router.post('/getEmployeesByLastName', auth.auth, auth.admin,
   nomina_reports.getEmployeesByLastName);
 router.get('/getMyEmployee', auth.auth, nomina_reports.getMyEmployee);
 router.get('/getAllPayCycles', auth.auth, auth.admin,
   nomina_reports.getAllPayCycles);
-router.get('/getPayCyclesByDateRange', auth.auth, auth.admin,
+router.post('/getPayCyclesByDateRange', auth.auth, auth.admin,
   nomina_reports.getPayCyclesByDateRange);
 router.get('/getMyFullPayHistory', auth.auth,
   nomina_reports.getMyFullPayHistory);
-router.get('/getMyPayHistoryByDateRange', auth.auth,
+router.post('/getMyPayHistoryByDateRange', auth.auth,
   nomina_reports.getMyPayHistoryByDateRange);
 
 

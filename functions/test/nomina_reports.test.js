@@ -100,7 +100,7 @@ function getAllEmployees_test(token) {
 
 function getEmployeesByNameInitial_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ function getEmployeesByNameInitial_test(token) {
 
 function getEmployeesByLastNameInitial_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ function getEmployeesByLastNameInitial_test(token) {
 
 function getEmployeesByName_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ function getEmployeesByName_test(token) {
 
 function getEmployeesLastByName_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -344,7 +344,7 @@ function getAllPayCycles(token) {
 
 function getPayCyclesByDateRange(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -427,7 +427,7 @@ function getMyFullPayHistory(token) {
 
 function getMyPayHistoryByDateRange(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',

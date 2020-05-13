@@ -61,7 +61,7 @@ async function addSiembras(token) {
 
 function getSiembrasBySeason_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ function getSiembrasBySeason_test(token) {
 
 function getSiembrasByPlantingDate_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ function getSiembrasByPlantingDate_test(token) {
 
 function getSiembrasByHarvestDate_test(token) {
   return request({
-    method: 'GET',
+    method: 'POST',
     json: true,
     headers: {
       'Content-Type': 'application/json',
