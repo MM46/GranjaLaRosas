@@ -54,33 +54,15 @@ function removeConcept(req, res) {
 
 function updateConcept(req, res) {
   const body = req.body;
-  if (body.old.date != body.new.date) {
-    removeConceptAux(body.old).then(function (_) {
-      addConceptAux(body.new).then(function (data) {
-        return res.send(data);
-      }).catch(function (err) {
-        return res.status(500).send(err);
-      });
+  removeConceptAux(body.old).then(function (_) {
+    addConceptAux(body.new).then(function (data) {
+      return res.send(data);
     }).catch(function (err) {
       return res.status(500).send(err);
     });
-  } else {
-    const date_str = body.old.date.toString();
-    db.collection('concepts').doc(date_str).get().then(function (doc) {
-      var array = doc.data().array;
-      for (let x = 0; x < array.length; x++) {
-        if (array[x] == body.old) {
-          array[x] = body.new;
-        }
-      }
-      db.collection('concepts').doc(date_str).set({
-        'array': array
-      });
-      return res.send(date_str);
-    }).catch(function (_) {
-      return res.status(500).send("Error al leer gastos")
-    });
-  }
+  }).catch(function (err) {
+    return res.status(500).send(err);
+  });
 }
 
 /**
