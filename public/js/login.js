@@ -24,7 +24,7 @@ $('#login_button').on('click', function () {
       window.location = './signUpEmployee.html';
     },
     error: function (error_msg) {
-      alert((error_msg["responseText"]))
+      alert(error_msg);
     }
   });
 });
@@ -35,7 +35,7 @@ function getLogin() {
     window.location = './signUp.html';
   }
 }
-  
+
 // function checkingAdmin() {
 //   $.ajax({
 //     url: 'https://granjalasrosasback.web.app/dummyAdmin',

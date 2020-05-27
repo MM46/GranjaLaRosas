@@ -20,7 +20,7 @@ $('#logout_button').on('click', function () {
 
     },
     error: function (error_msg) {
-      alert((error_msg['responseText']));
+      alert(error_msg);
     }
   });
 
@@ -30,11 +30,11 @@ $('#logout_button').on('click', function () {
 
 function getLogin() {
   const token = localStorage.getItem('token');
-    if (!token) {
-      window.location = './Login.html';
-    }
+  if (!token) {
+    window.location = './Login.html';
+  }
 }
-  
+
 function checkingAdmin() {
   $.ajax({
     url: 'https://granjalasrosasback.web.app/getMyUser',
@@ -46,13 +46,13 @@ function checkingAdmin() {
     dataType: 'json',
     success: function (data) {
       // alert("role: " + data.role);
-      if(data.role == "employee"){
+      if (data.role == "employee") {
         alert("No tienes permiso de Administrador");
         window.location = './signUpEmployee.html';
       }
     },
     error: function (error_msg) {
-      alert((error_msg['responseText']));
+      alert(error_msg);
     }
   });
 }

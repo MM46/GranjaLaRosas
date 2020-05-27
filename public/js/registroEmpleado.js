@@ -71,8 +71,8 @@ $('#registrar_button').on('click', function () {
   let name = $('#name').val();
   let lastname1 = $('#lastname1').val();
   let lastname2 = $('#lastname2').val();
-  let birth_date = $('#birth_date').val();
-  let hire_date = $('#hire_date').val();
+  let birth_date = formatDate($('#birth_date').val());
+  let hire_date = formatDate($('#hire_date').val());
   let salary = $('#salary').val();
 
   json_to_send = {
