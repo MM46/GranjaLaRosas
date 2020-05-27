@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title> Granja Las Rosas - Gastos </title>
+<link rel="stylesheet" href="./css/css.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="bs-example">
+    <nav class="navbar navbar-expand-md navbar-light navigationBar">
+        <a href="./signUp.html"><img class="logo" src="./img/lasRosasLogo.png" alt="Granja Las Rosas Logo"></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <div class="navbar-nav">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Empleados</a>
+                    <div class="dropdown-menu">
+                        <a href="./empleadosRegistrados.html" class="dropdown-item">Empleados Registrados</a>
+                        <a href="./registroEmpleado.html" class="dropdown-item">Registrar Empleado</a>
+                        <a href="./passwordForgotten.html" class="dropdown-item">Cambiar Contraseña de Empleado</a>
+                    </div>
+                </div>
+                <a href="./nominas.html" class="nav-item nav-link">Nóminas</a>
+                <a href="./gastos.html" class="nav-item nav-link">Gastos</a>
+                <a href="./sembradios.html" style="margin-right: 50px;" class="nav-item nav-link">Sembradíos</a>
+            </div>
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link btn btn-success logoutButton" id="logout_button">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<section class="main">
+    <div class="formStyle">
+        <div class="form-group has-search">
+            <span class="fa fa-calendar form-control-feedback"></span>
+            <input type="date" class="form-control" onkeyup="" id="from" placeholder="Desde">
+          </div>
+          <div class="form-group has-search">
+            <span class="fa fa-calendar form-control-feedback"></span>
+            <input type="date" class="form-control" onkeyup="" id="to" placeholder="Hacia">
+          </div>
+          <button onclick="loadGastos()" class ="form-control-feedback">Buscar <i class="fa fa-search"></i></button>
+    <div id="gastos">
+        <div id="loading" class="spinner-border m-5" role="status" style="display: none">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div id="info" style="display: none">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                     <h3 class="title-label">Gastos</h3>
+                 </div>
+                 <div class="col-md-4">
+                 </div>
+            </div>
+           <div class="row">
+            <div class="col-md-3">
+                <h4 class="title-label">Fecha</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="title-label">Costo</h4>
+            </div>
+            <div class="col-md-6">
+                <h4 class="title-label">Descripción</h4>
+            </div>
+        </div>
+        </div>
+        
+       </div>
+       <div class="formStyle">
+            <div class="col">
+                <button onclick="window.location.href = './agregarGasto.html';" class="button yellow"> Agregar Gasto </button>
+            </div>
+            <div class="col">
+                <button onclick="window.location.href = './ganancias.html';" class="button red"> Reportes de Ganancias </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/gastos.js"></script>
+</body>
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class="container text-center">
+      <small>&copy; Granja Las Rosas
+        <script>document.write(new Date().getFullYear());</script>
+    </small>
+    </div>
+  </footer>
+</html>                            

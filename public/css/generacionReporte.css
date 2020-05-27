@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family:'Montserrat', sans-serif;
+    /* position:relative; */
+}
+  
+
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .main {
+    margin-left: 160px; 
+    padding: 0px 10px;
+  }
+  
+  .logoutButton {
+      background: black;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  } */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 100px;
+    background: rgb(238, 206, 4);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header .logo{
+    color: #fff;
+    height: 30px;
+    line-height: 20px;
+    float: left;
+    font-weight: bold;
+    padding-top: 0.5rem;
+    margin-top: 5px;
+}
+  
+header nav {
+    float: right;
+}
+    
+header nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    list-style: none;
+}
+
+header nav ul li a{
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active{
+    color: #fff;
+    background: #2196f3;
+}
+
+.menu-toggle{
+    color: #fff;
+    float: right;
+    line-height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 450px){
+    header {
+        padding: 0 20px;
+    }
+    .menu-toggle{
+        display: block;
+    }
+    header nav {
+        position: absolute;
+        width: 100%;
+        height: calc(100vh - 50px);
+        background: #333;
+        top: 50px;
+        left: -100%;
+        transition: 0.5s;
+    }
+
+    header nav.active {
+        left: 0;
+    }
+
+    header nav ul{
+        display: block;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        border-bottom: 1 px solid rgba(0, 0, 0, .2);
+    }
+}
+
+
+.sidenav {
+    height: 100%; 
+    width: 160px; 
+    position: fixed; 
+    z-index: 1; 
+    /* top: 50px;  */
+    left: 0;
+    background-color: #FEFB9D; 
+    overflow-x: hidden; 
+    /* padding-top: 20px; */
+  }
+  
+  .sidenav a {
+    padding: 10px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+
+  .main {
+    margin-left: 160px; 
+    padding: 0px 20px;
+  }
+  
+ 
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 0 20px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: auto;
+    background-color :#55544F;
+    color: white;
+    text-align: center;
+ }
+
+  .divStyle {
+    /* margin: 60px auto 97px auto; */
+    /* /* padding: 30px; */
+    background: none;
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap   ; 
+    margin-top: 100px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 100px;
+}
+
+.button{
+  padding: 8px 20px;
+  border-radius: 15px;
+  border: none;
+  width: 100%;
+  height: auto;
+  font-weight: bold;
+  font-size: auto;
+}
+.button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+.login{
+  background: rgb(250, 190, 26);
+}

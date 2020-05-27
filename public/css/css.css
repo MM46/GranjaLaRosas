@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+*{
+    /* margin: 0px;
+    padding: 0px; */
+    font-family:'Montserrat', sans-serif;
+}
+  
+  
+  .logoutButton {
+      background-color: #4480E9;
+      color: white !important;
+      font-weight: bold !important;
+      background-color: #4480E9 !important;
+  }
+
+footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background-color :#55544F;
+    color: white;
+    font-weight: bold;
+}
+  
+
+body {
+    background: url('https://mm46.github.io/GranjaLaRosas-Frontend/GranjaLasRosas/img/logInBg.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+.logo{
+    height: 30px;
+    line-height: 20px;
+    float: left;
+    font-weight: bold;
+}
+
+.navigationBar{
+    background-color:rgb(238, 206, 4); 
+}
+
+.title-label, .password-label, .name-label, .lastname_1-label, .lastname_2-label, .salary-label, .birth_date-label, .hire_date-label {
+    padding:8px 0px;
+    font-weight: bold;
+}
+
+.formStyle{
+    margin: 20px auto 97px auto;
+    padding: 30px;
+    background: white;
+    opacity: 90%;
+    border-radius: 10px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap   ;
+}
+
+.button{
+    padding: 8px 20px;
+    border-radius: 15px;
+    border: none;
+    width: 100%;
+    height: auto;
+    font-weight: bold;
+    font-size: auto;
+}
+.button:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+.yellow{
+    
+    background: rgb(250, 190, 26);
+    font-weight: bold;
+    margin-bottom: 10px;
+    /* width: 60%; */
+}
+
+.red{
+    background: #F96026;
+    color:white;
+}
+
+.formInput{
+    /* padding: 10px 10px; */
+    border-radius: 0.5em;
+    border: 2px solid orange !important;
+    /* text-align: center !important; */
+    
+}
+.formInput:focus{
+    outline-style: inherit;
+}
+ .title-label, .normalLabel, .password-label, .name-label, .lastname_1-label, .lastname_2-label, .salary-label, .birth_date-label, .hire_date-label {
+    padding:8px 0px;
+    font-weight: bold;
+    /* font-size:5vw; */
+    /* text-align: center !important; */
+}
+h4 {
+    font-size:2vw;
+}
+
+.divisor {
+    margin: 0 0 0 0;
+    /* padding: 0; */
+    /* background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 110%), #F3D11A; */
+    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+    background: white;
+    opacity: 80%;
+    border-radius: 10px;
+    top: 0;
+    height: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap   ;
+}
+
+.main {
+    width: 80%;
+    margin: 50px auto;
+}
+
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
