@@ -90,6 +90,7 @@ $('#changePassword_button').on('click', function () {
     },
     method: 'PATCH',
     dataType: 'text',
+    data: json_to_send,
     success: function (data) {
       console.log("updating pass");
       alert("Contraseña de cambiada con exito.");

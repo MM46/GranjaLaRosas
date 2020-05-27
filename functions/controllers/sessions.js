@@ -103,7 +103,7 @@ const updatePass = function (req, res) {
         db.collection('users').doc(user.username).update({
           'pass': hashed_pass
         });
-        res.send(user.username);
+        return res.send(user.username);
       }).catch(function (_) {
         return res.status(400).send('La nueva contraseña no es valida');
       });
@@ -111,7 +111,7 @@ const updatePass = function (req, res) {
       return res.status(400).send('La contraseña anterior no coincide');
     }
   }).catch(function (_) {
-    return res.status(400).send('Error al actualizar contraseña');
+    return res.status(500).send('Error al actualizar contraseña');
   });
 }
 
