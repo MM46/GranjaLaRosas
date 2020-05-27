@@ -6,7 +6,7 @@ function formatDate(raw_date) {
   return year + month + day;
 }
 
-function getDisplayableDate(date) {
+function getPrintableDate(date) {
   return inputDate.substring(0, 4) + '-'
     + inputDate.substring(5, 7) + '-'
     + inputDate.substring(8, 10);
