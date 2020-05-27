@@ -6,11 +6,18 @@ function getEmployees(condition) {
       var employees = [];
       querySnapshot.forEach(function (doc) {
         const employee = doc.data();
-        if (condition(employee) && employee.active) {
+        if (condition(employee)) {
           employees.push(employee);
         }
       })
-      resolve(employees);
+      resolve(employees.sort(function(a, b) {
+        if (a.active && !b.active) {
+          return 1;
+        } else if (!a.active && b.active) {
+          return -1;
+        }
+        return a.name.localeCompare(b.name);
+      }));
     });
   }).catch(function (_) {
     reject('Error al acceder base de datos');
