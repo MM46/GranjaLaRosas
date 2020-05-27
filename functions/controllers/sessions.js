@@ -119,10 +119,16 @@ const resetPass = function (req, res) {
       'username': body.username,
       'pass': pass
     };
-    db.collection('users').doc(body.username).update({
-      'pass': hashed_pass
+    db.collection('users').doc(body.username).get().then(function(doc) {
+      if (doc.exists) {
+        db.collection('users').doc(body.username).update({
+          'pass': hashed_pass
+        });
+        return res.send(user_data);
+      } else {
+        return res.status(400).send('El usuario no existe');
+      }
     });
-    return res.send(user_data);
   }).catch(function (error) {
     return res.status(500).send('Error al generar contraseña');
   });
