@@ -98,16 +98,20 @@ const updatePass = function (req, res) {
   var user = req.user;
   const body = req.body;
   bcrypt.compare(body.old_pass, user.pass).then(function (match) {
-    bcrypt.hash(body.new_pass, 8).then(function (hashed_pass) {
-      db.collection('users').doc(user.username).update({
-        'pass': hashed_pass
+    if (match) {
+      bcrypt.hash(body.new_pass, 8).then(function (hashed_pass) {
+        db.collection('users').doc(user.username).update({
+          'pass': hashed_pass
+        });
+        res.send(user.username);
+      }).catch(function (_) {
+        return res.status(400).send('La nueva contraseña no es valida');
       });
-      res.send(user.username);
-    }).catch(function (_) {
-      return res.status(400).send('La nueva conttraseña no es valida');
-    });
+    } else {
+      return res.status(400).send('La contraseña anterior no coincide');
+    }
   }).catch(function (_) {
-    return res.status(400).send('La contraseña anterior no coincide');
+    return res.status(400).send('Error al actualizar contraseña');
   });
 }
 
