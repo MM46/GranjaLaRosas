@@ -54,32 +54,15 @@ function removeSiembra(req, res) {
 
 function updateSiembra(req, res) {
   const body = req.body;
-  if (body.old.season != body.new.season) {
-    removeSiembraAux(body.old).then(function (_) {
-      addSiembraAux(body.new).then(function (data) {
-        return res.send(data);
-      }).catch(function (err) {
-        return res.status(500).send(500);
-      });
+  removeSiembraAux(body.old).then(function (_) {
+    addSiembraAux(body.new).then(function (data) {
+      return res.send(data);
     }).catch(function (err) {
-      return res.status(500).send(500);
+      return res.status(500).send(err);
     });
-  } else {
-    db.collection('siembras').doc(body.old.season).get().then(function (doc) {
-      var array = doc.data().array;
-      for (let x = 0; x < array.length; x++) {
-        if (array[x] == body.old) {
-          array[x] = body.new;
-        }
-      }
-      db.collection('siembras').doc(body.old.season).set({
-        'array': array
-      });
-      return res.send(body.new.planting_date.toString());
-    }).catch(function (_) {
-      return res.status(500).send("Error al leer gastos")
-    });
-  }
+  }).catch(function (err) {
+    return res.status(500).send(err);
+  });
 }
 
 function getSiembras(req, res) {
