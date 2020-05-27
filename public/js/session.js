@@ -11,30 +11,36 @@ function getToken() {
   return token;
 }
 
-function checkingAdmin() {
-  $.ajax({
-    url: 'https://granjalasrosasback.web.app/getMyUser',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': token
-    },
-    method: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      // alert("role: " + data.role);
-      if (data.role == "employee") {
-        alert("No tienes permiso de Administrador");
-        window.location = './signUpEmployee.html';
+function checkingAdminPromise() {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: 'https://granjalasrosasback.web.app/getMyUser',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        if (data.role == "admin") {
+          resolve();
+        } else {
+          reject();
+        }
+      },
+      error: function (error_msg) {
+        alert(error_msg['responseText']);
       }
-    },
-    error: function (error_msg) {
-      alert(error_msg);
-    }
-  });
+    });
+  })
 }
 
-getLogin()
-checkingAdmin()
+function checkingAdmin() {
+  checkingAdminPromise().catch(function () {
+    alert("No tienes permiso de Administrador");
+    window.location = './signUpEmployee.html';
+  });
+}
 
 $('#logout_button').on('click', function () {
   $.ajax({
@@ -52,7 +58,7 @@ $('#logout_button').on('click', function () {
 
     },
     error: function (error_msg) {
-      alert((error_msg['responseText']));
+      alert(error_msg['responseText']);
     }
   });
 

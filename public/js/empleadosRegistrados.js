@@ -193,16 +193,6 @@ function writeEmployee(employee) {
     lista.appendChild(divisionRow);
 }
 
-function displayLoading() {
-    var loading = document.getElementById("loading");
-    var info = document.getElementById("info");
-    var loading = document.getElementById("loading");
-    if (loading.style.display === "block") {
-      loading.style.display = "none";
-      info.style.display = "block";
-    }
-}
-
 function loadEmpleados() {
     $.ajax({
       url: 'https://granjalasrosasback.web.app/getAllEmployees',
@@ -216,7 +206,7 @@ function loadEmpleados() {
         $.each(data, function(index, employee) {
           writeEmployee(employee);
         });
-        displayLoading();
+        hideLoading();
       },
       error: function (error_msg) {
         alert(error_msg['responseText']);
@@ -247,7 +237,7 @@ function loadEmpleados() {
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         })
-        displayLoading();
+        hideLoading();
         if(lista.childElementCount == 0){
          loadEmpleadosByLastNameInitial();
         }
@@ -280,7 +270,7 @@ function loadEmpleados() {
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         });
-        displayLoading();
+        hideLoading();
       },
       error: function (error_msg) {
         alert(error_msg['responseText']);
@@ -314,7 +304,7 @@ function loadEmpleados() {
             writeEmployee(employee);
             
         });
-        displayLoading();
+        hideLoading();
         if(lista.childElementCount == 0){
           // loadEmpleadosByLastName();
          }
@@ -346,7 +336,7 @@ function loadEmpleados() {
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         });
-        displayLoading();
+        hideLoading();
         if(lista.childElementCount == 0){
           console.log("no hay usuarios encontrados");
          }

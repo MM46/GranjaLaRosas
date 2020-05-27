@@ -24,36 +24,15 @@ $('#login_button').on('click', function () {
       window.location = './signUpEmployee.html';
     },
     error: function (error_msg) {
-      alert(error_msg);
+      alert(error_msg['responseText']);
     }
   });
 });
 
-function getLogin() {
+function verifyLogin() {
   const token = localStorage.getItem('token');
   if (token) {
-    window.location = './signUp.html';
+    window.location = './signUpEmployee.html';
   }
 }
-
-// function checkingAdmin() {
-//   $.ajax({
-//     url: 'https://granjalasrosasback.web.app/dummyAdmin',
-//     headers: {
-//       'Content-Type': 'application/json',
-
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//       console.log("Eres admin");
-//       // admin = true;
-//     },
-//     error: function (error_msg) {
-//       alert((error_msg['responseText']));
-//     }
-//   });
-// }
-
-// checkingAdmin();
-getLogin()
+verifyLogin()
