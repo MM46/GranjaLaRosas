@@ -1,9 +1,14 @@
+var token = localStorage.getItem('token');
+token = token.replace(/^"(.*)"$/, '$1'); // Remove quotes from token start/end.
+
 function getLogin() {
-  const token = localStorage.getItem('token');
   if (!token) {
     window.location = './Login.html';
   }
-  return token
+}
+
+function getToken() {
+  return token;
 }
 
 function checkingAdmin() {
@@ -36,7 +41,7 @@ $('#logout_button').on('click', function () {
     url: 'https://granjalasrosasback.web.app/logout',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + getLogin()
+      'Authorization': 'Bearer ' + token
     },
     method: 'POST',
     dataType: 'json',
