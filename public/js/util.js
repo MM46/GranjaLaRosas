@@ -1,7 +1,7 @@
-function formatDate(raw_date) {
-  let year = inputDate.substring(0, 4);  
-  let month = inputDate.substring(5, 7); 
-  let day = inputDate.substring(8, 10);
+function formatDate(rawDate) {
+  let year = rawDate.substring(0, 4);  
+  let month = rawDate.substring(5, 7); 
+  let day = rawDate.substring(8, 10);
 
   return year + month + day;
 }
