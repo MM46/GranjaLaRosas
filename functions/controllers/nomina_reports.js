@@ -212,7 +212,7 @@ function getMyPayHistory(username, condition) {
                   'amount': employee.amount,
                   'deductions': employee.deductions,
                   'net_pay': employee.net_pay,
-                  'absences': employee.absences
+                  'absences_counter': employee.absences_counter
                 });
               }
               if (index == querySnapshot.size) {
