@@ -21,17 +21,10 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
             <div class="navbar-nav">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Empleados</a>
-                    <div class="dropdown-menu">
-                        <a href="./empleadosRegistrados.html" class="dropdown-item">Empleados Registrados</a>
-                        <a href="./registroEmpleado.html" class="dropdown-item">Registrar Empleado</a>
-                        <a href="./passwordForgotten.html" class="dropdown-item">Cambiar Contraseña de Empleado</a>
-                    </div>
-                </div>
+                <a href="./empleadosRegistrados.html" class="nav-item nav-link">Empleados</a>
                 <a href="./nominas.html" class="nav-item nav-link">Nóminas</a>
                 <a href="./gastos.html" class="nav-item nav-link">Gastos</a>
-                <a href="./sembradios.html" style="margin-right: 50px;" class="nav-item nav-link">Sembradíos</a>
+                <a href="./sembradios.html" class="nav-item nav-link">Sembradíos</a>
             </div>
             <div class="navbar-nav">
                 <a href="#" class="nav-item nav-link btn btn-success logoutButton" id="logout_button">Cerrar Sesión</a>
@@ -56,15 +49,33 @@
        </div>
        
        <div class="row">
-        <div class="col-md-3">
-        </div>
-            <div class="col-md-6">
+        <div class="col-md-3"> </div>
+            <div class="col">
                 <label for="date" class="title-label">Temporada:</label>
-                <input class="form-control form-control-sm formInput" type="text"  id="season" placeholder="Temporada">
+                <select class="mdb-select md-form formInput" id="season">
+                    <option value="" disabled selected>Estación</option>
+                    <option value="Primavera">Primavera</option>
+                    <option value="Verano">Verano</option>
+                    <option value="Otoño">Otoño</option>
+                    <option value="Invierno">Invierno</option>
+                </select>
+                <select class="mdb-select md-form formInput" id="year">
+                    <option value="" disabled selected>Año</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                </select>
+                <!-- <input class="form-control form-control-sm formInput" type="text"  id="season" placeholder="Temporada"> -->
             </div>
-            <div class="col-md-3">
-
-            </div>
+            <div class="col-md-3"></div>
        </div>
        
        <div class="row">
@@ -132,6 +143,8 @@
   </section>
 
     <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/session.js"></script>
     <script type="text/javascript" src="js/agregarNuevaSiembra.js"></script>
 </body>
 <footer id="sticky-footer" class="py-4 bg-dark text-white-50">

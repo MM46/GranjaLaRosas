@@ -52,9 +52,6 @@ $('#logout_button').on('click', function () {
     method: 'POST',
     dataType: 'json',
     success: function (data) {
-      // agregar cÃ³digo aqui para poner los datos del todolist en el el html
-      // addTodo(data._id, data.description, data.completed)
-      console.log("logout hecho")
 
     },
     error: function (error_msg) {
@@ -73,3 +70,60 @@ function getLogin() {
   }
 }
 
+function resetPassword(username) {
+
+  json_to_send = {
+    "username": username
+  };
+  json_to_send = JSON.stringify(json_to_send);
+
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/resetPass',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'PATCH',
+    dataType: 'json',
+    data: json_to_send,
+    success: function (data) {
+      alert("La nueva contraseña de " + username + " es:" + data["pass"]);
+    },
+    error: function (error_msg) {
+      alert((error_msg['responseText']));
+    }
+  });
+
+}
+
+// terminateEmployee
+
+function terminateEmployee(username) {
+
+  json_to_send = {
+    "username": username
+  };
+console.log("usss = " + username);
+  json_to_send = JSON.stringify(json_to_send);
+
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/terminateEmployee',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'PATCH',
+    dataType: 'json',
+    data: json_to_send,
+    success: function (data) {
+      // alert("El usuario " + username + " se ha dado de baja exitosamente");
+      // window.location = './empleadosRegistrados.html';
+    },
+    error: function (error_msg) {
+      // alert((error_msg['responseText']));
+      alert("El usuario " + username + " se ha dado de baja exitosamente");
+      window.location = './empleadosRegistrados.html';
+    }
+  });
+
+}

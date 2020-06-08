@@ -1,199 +1,234 @@
 function agregarSalario(id) {
-    var username = document.getElementById(id + 'username').innerText;
+    var username = id;
+    console.log("us = " + username);
     var url = './agregarSalario.html?username=' + encodeURIComponent(username);
     document.location.href = url;
 }
 
-function writeEmployee(employee) {
-    var lista = document.getElementById("usuarios");
-
-    var firstRow = document.createElement("div");
-    firstRow.setAttribute('class', 'row');
-
-    var usernameCol = document.createElement("div");
-    usernameCol.setAttribute('class', 'col');
-    usernameCol.setAttribute('id', 'username');
-
-    var usernameText = document.createElement("h4");
-    usernameText.setAttribute('class', 'title-label');
-    usernameText.innerText = "Nombre de usuario:"
-
-    var usernameText2 = document.createElement("label");
-    usernameText2.setAttribute('class', 'user-label');
-    usernameText2.innerText = employee.username;
-
-    var statusCol = document.createElement("div");
-    statusCol.setAttribute('class', 'col');
-    statusCol.setAttribute('id', 'status');
-
-    var statusText = document.createElement("h4");
-    statusText.setAttribute('class', 'title-label');
-    statusText.innerText = "Estatus de Empleado:"
-
-    var statusText2 = document.createElement("label");
-    statusText2.setAttribute('class', 'user-label');
-
-
-    if(employee.active){
-      statusText2.innerText = "Activo";
-      statusText2.setAttribute('style', 'color:green');
-    }else{
-      statusText2.innerText = "Inactivo"
-      statusText2.setAttribute('style', 'color:red');
-    }
-
-    usernameCol.appendChild(usernameText);
-    usernameCol.appendChild(usernameText2);
-
-    statusCol.appendChild(statusText);
-    statusCol.appendChild(statusText2);
-
-    firstRow.appendChild(usernameCol);
-    firstRow.appendChild(statusCol);
-
-    lista.appendChild(firstRow);
-
-    var secondRow = document.createElement("div");
-    secondRow.setAttribute('class', 'row');
-
-    var birthdateCol = document.createElement("div");
-    birthdateCol.setAttribute('class', 'col');
-    birthdateCol.setAttribute('id', 'birthdate');
-
-    var birthdateText = document.createElement("h4");
-    birthdateText.setAttribute('class', 'title-label');
-    birthdateText.innerText = "Fecha de Nacimiento:"
-
-    var birthdateText2 = document.createElement("label");
-    birthdateText2.setAttribute('class', 'user-label');
-    birthdateText2.innerText = employee.birth_date;
-
-    var hiredateCol = document.createElement("div");
-    hiredateCol.setAttribute('class', 'col');
-    hiredateCol.setAttribute('id', 'hiredate');
-
-    var hiredateText = document.createElement("h4");
-    hiredateText.setAttribute('class', 'title-label');
-    hiredateText.innerText = "Fecha de Contratación:"
-
-    var hiredateText2 = document.createElement("label");
-    hiredateText2.setAttribute('class', 'user-label');
-    hiredateText2.innerText = employee.hire_date;
-
-    birthdateCol.appendChild(birthdateText);
-    birthdateCol.appendChild(birthdateText2);
-
-    hiredateCol.appendChild(hiredateText);
-    hiredateCol.appendChild(hiredateText2);
-
-    secondRow.appendChild(birthdateCol);
-    secondRow.appendChild(hiredateCol);
-
-    lista.appendChild(secondRow);
-
-    var thirdRow = document.createElement("div");
-    thirdRow.setAttribute('class', 'row');
-
-    var salaryCol = document.createElement("div");
-    salaryCol.setAttribute('class', 'col');
-    salaryCol.setAttribute('id', 'salary');
-
-    var salaryText = document.createElement("h3");
-    salaryText.setAttribute('class', 'title-label');
-    salaryText.innerText = "Salario:"
-
-    salaryCol.appendChild(salaryText);
-
-    thirdRow.appendChild(salaryCol);
-
-    lista.appendChild(thirdRow);
-
-    var fourthRow = document.createElement("div");
-    fourthRow.setAttribute('class', 'row');
-
-    var amountCol = document.createElement("div");
-    amountCol.setAttribute('class', 'col');
-    amountCol.setAttribute('id', 'amount');
-
-    var amountText = document.createElement("h4");
-    amountText.setAttribute('class', 'title-label');
-    amountText.innerText = "Cantidad:"
-
-    var dateCol = document.createElement("div");
-    dateCol.setAttribute('class', 'col');
-    dateCol.setAttribute('id', 'date');
-
-    var dateText = document.createElement("h4");
-    dateText.setAttribute('class', 'title-label');
-    dateText.innerText = "Fecha de Pago:"
-
-    amountCol.appendChild(amountText);
-    dateCol.appendChild(dateText);
-
-    fourthRow.appendChild(amountCol);
-    fourthRow.appendChild(dateCol);
-    lista.appendChild(fourthRow);
-
-
-    $.each(employee.salary, function(index, salarios) {
-      var row = document.createElement("div");
-      row.setAttribute('class', 'row');
-
-      var col1 = document.createElement("div");
-      col1.setAttribute('class', 'col');
-
-      var amountText2 = document.createElement("label");
-      amountText2.setAttribute('class', 'user-label');
-      amountText2.innerText = "$ " + salarios.amount + ".00"; 
-
-      col1.appendChild(amountText2);
-      row.appendChild(col1);
-
-      var col2 = document.createElement("div");
-      col2.setAttribute('class', 'col');
-
-      var dateText2 = document.createElement("label");
-      dateText2.setAttribute('class', 'user-label');
-      dateText2.innerText = salarios.date;
-
-      col2.appendChild(dateText2);
-      row.appendChild(col2);
-
-      lista.appendChild(row);
-
-    });
-
-    var fifthRow = document.createElement("div");
-    fifthRow.setAttribute('class', 'row');
-
-    var addSalaryCol = document.createElement("div");
-    addSalaryCol.setAttribute('class', 'col');
-
-    var addSalaryButton = document.createElement("button");
-    addSalaryButton.setAttribute('class', 'button yellow')
-    addSalaryButton.setAttribute("id",employee.username);
-    addSalaryButton.innerText = "Agregar Salario"
-    addSalaryButton.setAttribute("onclick","agregarSalario(id)");
-    usernameText2.setAttribute("id", employee.username+ "username");
-
-    addSalaryCol.appendChild(addSalaryButton);
-    fifthRow.appendChild(addSalaryCol);
-
-    lista.appendChild(fifthRow);
-
-    var divisionRow = document.createElement("div");
-    divisionRow.setAttribute('class', 'row');
-
-    var divisionCol = document.createElement("div");
-    divisionCol.setAttribute('class', 'col');
-    divisionCol.setAttribute('style', 'opacity: 50%; background:grey; height: 5px');
-
-    divisionRow.appendChild(divisionCol);
-
-    lista.appendChild(divisionRow);
+function getInfoEmpleado() {
+  var x = document.getElementById("usuarios");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }
 
+
+function writeEmployee(employee) {
+  var lista = document.getElementById("usuarios");
+
+  lista.innerHTML += "<hr>"
+
+  var firstRow = document.createElement("div");
+  firstRow.setAttribute('class', 'row');
+
+  var name = employee.name + " " + employee.lastname1 + " " + employee.lastname2;
+  var username = employee.username;
+  firstRow.setAttribute('id', "info" + username);
+  firstRow.setAttribute('username', username);
+  firstRow.setAttribute('name', name);
+  firstRow.setAttribute('birth_date', employee.birth_date);
+  firstRow.setAttribute('hire_date', employee.hire_date);
+  firstRow.setAttribute('salaries', JSON.stringify(employee.salary));
+
+
+  if(employee.active){
+    firstRow.setAttribute('status', "Activo");
+  }else{
+    firstRow.setAttribute('status', "Inactivo");
+  }
+
+  var moreInfoButton = document.createElement("button");
+  moreInfoButton.setAttribute("id", "info" + username);
+  moreInfoButton.setAttribute("type", "button");
+  moreInfoButton.setAttribute("class", "btn btn-light btn-block");
+  moreInfoButton.setAttribute("onclick","getAllInfoEmployee(id)");
+  moreInfoButton.setAttribute("data-toggle","modal");
+  moreInfoButton.setAttribute("data-target","#myModal");
+  moreInfoButton.innerText = "Ver toda la información";
+
+
+  
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+username+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+name+"</small></div>";
+
+  firstRow.innerHTML += "<br>"
+  firstRow.innerHTML += "<br>"
+  
+  firstRow.appendChild(moreInfoButton);
+
+
+  lista.appendChild(firstRow);
+  
+}
+
+
+function getAllInfoEmployee(user) {
+
+  var username = $("#"+user).attr("username");
+  var name = $("#"+user).attr("name");
+  var status = $("#"+user).attr("status");
+  var birth_date = $("#"+user).attr("birth_date");
+  birth_date = getPrintableDate(birth_date);
+  var hire_date = $("#"+user).attr("hire_date");
+  hire_date = getPrintableDate(hire_date);
+  var salaries = $("#"+user).attr("salaries");
+
+
+  var lista = document.getElementById("allInfo");
+  lista.innerHTML = "";
+
+    var usernameRow = document.createElement("div");
+    usernameRow.setAttribute('class', 'row');
+  
+    usernameRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Usuario</small></div>";
+    usernameRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+username+"</small></div>";
+
+    lista.appendChild(usernameRow);
+
+    var nameRow = document.createElement("div");
+    nameRow.setAttribute('class', 'row');
+
+    nameRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Nombre Completo</small></div>";
+    nameRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+name+"</small></div>";
+    lista.appendChild(nameRow);
+
+    var statusRow = document.createElement("div");
+    statusRow.setAttribute('class', 'row');
+
+    if(status == "Activo"){
+      statusRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Estatus</small></div>";
+      statusRow.innerHTML += "<div class="+"col"+"><small style = "+"color:green"+">"+status+"</small></div>";
+    }else{
+      statusRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Estatus</small></div>";
+      statusRow.innerHTML += "<div class="+"col"+"><small style = "+"color:red"+">"+status+"</small></div>";
+    }
+
+
+    lista.appendChild(statusRow);
+
+    var birthDateRow = document.createElement("div");
+    birthDateRow.setAttribute('class', 'row');
+
+    birthDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Nacimiento</small></div>";
+    birthDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+birth_date+"</small></div>";
+    lista.appendChild(birthDateRow);
+
+    var hireDateRow = document.createElement("div");
+    hireDateRow.setAttribute('class', 'row');
+
+    hireDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Contratación</small></div>";
+    hireDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+hire_date+"</small></div>";
+    lista.appendChild(hireDateRow);
+
+
+    var lista2 = document.getElementById("salariesInfo");
+    lista2.innerHTML = "";
+
+    var salariesRow = document.createElement("div");
+    salariesRow.setAttribute('class', 'row');
+  
+    salariesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Fecha</small></div>";
+    salariesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Cantidad</small></div>";
+
+    lista2.appendChild(salariesRow);
+
+    var datesRow = document.createElement("div");
+    datesRow.setAttribute('class', 'row');
+
+
+
+    salaries = JSON.parse(salaries);
+    $.each(salaries, function(index, salary) {
+      var datesRow = document.createElement("div");
+      datesRow.setAttribute('class', 'row');
+          
+      datesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintableDate(salary.date) +"</small></div>";
+      datesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(salary.amount) +"</small></div>";
+      lista2.appendChild(datesRow);
+      });
+      lista2.innerHTML += "<br>"
+
+
+    var addSalaryRow = document.createElement("div");
+    addSalaryRow.setAttribute('class', 'row');
+    addSalaryRow.setAttribute('id', username);
+    
+
+    var addSalaryButton = document.createElement("button");
+    addSalaryButton.setAttribute("id", username);
+    addSalaryButton.setAttribute("type", "button");
+    addSalaryButton.setAttribute("class", "btn btn-success btn-block");
+    addSalaryButton.setAttribute("onclick","agregarSalario(id)");
+    addSalaryButton.innerText = "Agregar Salario";
+
+    lista2.appendChild(addSalaryButton);
+
+    var resetPasswordButton = document.createElement("button");
+    resetPasswordButton.setAttribute("id", username);
+    resetPasswordButton.setAttribute("type", "button");
+    resetPasswordButton.setAttribute("class", "btn btn-primary btn-block");
+    resetPasswordButton.setAttribute("onclick","resetPassword(id)");
+    resetPasswordButton.innerText = "Reestablecer Contraseña";
+
+    lista2.appendChild(resetPasswordButton);
+    
+    var modalfooter = document.getElementById("modalfooter");
+    modalfooter.innerHTML = "";
+
+    var terminateEmployeeButton = document.createElement("button");
+    terminateEmployeeButton.setAttribute("id", username);
+    terminateEmployeeButton.setAttribute("type", "button");
+    terminateEmployeeButton.setAttribute("class", "btn btn-link");
+    terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
+    terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+    
+    var closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("class", "btn btn-danger");
+    closeButton.setAttribute("data-dismiss","modal");
+    closeButton.innerText = "Cerrar";
+
+    modalfooter.appendChild(terminateEmployeeButton);
+    modalfooter.appendChild(closeButton);
+
+}
+
+function loadInitialInfo(){
+
+  var lista = document.getElementById("usuarios");
+
+  var title = document.createElement("h2");
+  title.innerText = "Empleados Registrados"
+
+  var ul = document.createElement("ul");
+  ul.setAttribute("class","list-group list-group-flush");
+
+  var container = document.createElement("div");
+  container.setAttribute("class","container");
+
+  var divRow = document.createElement("div");
+  divRow.setAttribute("id", "info-usuarios");
+
+  var firstRow = document.createElement("div");
+  firstRow.setAttribute("class", "row");
+
+  divRow.innerHTML += "<hr>"
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Nombre de Usuario</label></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Nombre Completo</label></div>";
+  divRow.appendChild(firstRow);
+  container.appendChild(divRow);
+  ul.appendChild(container);
+
+  lista.appendChild(title);
+  lista.appendChild(ul);
+}
+
+loadInitialInfo()
+
 function loadEmpleados() {
+
     $.ajax({
       url: 'https://granjalasrosasback.web.app/getAllEmployees',
       headers: {
@@ -203,6 +238,7 @@ function loadEmpleados() {
       method: 'GET',
       dataType: 'json',
       success: function (data) {
+        console.log(data);
         $.each(data, function(index, employee) {
           writeEmployee(employee);
         });
@@ -306,7 +342,7 @@ function loadEmpleados() {
         });
         hideLoading();
         if(lista.childElementCount == 0){
-          // loadEmpleadosByLastName();
+          loadEmpleadosByLastName();
          }
       },
 
@@ -360,7 +396,7 @@ function loadEmpleados() {
       lista.innerHTML = "";
       console.log("By name initial *******************************************");
       loadEmpleadosByNameInitial();
-    }else{
+    }else {
       var lista = document.getElementById("usuarios");
       lista.innerHTML = "";
       console.log("By name *******************************************");

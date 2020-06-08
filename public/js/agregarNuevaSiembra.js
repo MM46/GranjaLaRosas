@@ -69,13 +69,14 @@ checkingAdmin()
 $('#agregarSiembra').on('click', function () {
 
   let season = $('#season').val();
+  let year = $('#year').val();
   let seed = $('#seed').val();
   let planting_date = $('#planting_date').val();
   let harvest_date = $('#harvest_date').val();
   let progress = $('#progress').val();
 
   json_to_send = {
-    "season": season,
+    "season": season+year,
     "seed": seed,
     "planting_date" : planting_date,
     "harvest_date": harvest_date,
@@ -83,6 +84,7 @@ $('#agregarSiembra').on('click', function () {
   };
 
   json_to_send = JSON.stringify(json_to_send);
+  console.log("json to send " + json_to_send);
 
   $.ajax({
     url: 'https://granjalasrosasback.web.app/addSiembra',

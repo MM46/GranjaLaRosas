@@ -1,7 +1,4 @@
-const { db, firebase, fieldvalue } = require('../database');
-
-const increment1 = firebase.firestore.FieldValue.increment(1);
-const decrement1 = firebase.firestore.FieldValue.increment(-1);
+const { db, fieldvalue } = require('../database');
 
 const createEmployee = function (req, res) {
   const body = req.body;
@@ -69,7 +66,7 @@ const newPayCycle = function (req, res) {
             'amount': employee.salary[employee.salary.length - 1].amount,
             'deductions': 0,
             'net_pay': employee.salary[employee.salary.length - 1].amount,
-            'absences_counter': 0
+            'absences': []
           });
       }
     });
@@ -77,22 +74,22 @@ const newPayCycle = function (req, res) {
   return res.send(body.period_end.toString());
 }
 
-const addAbsence = function (req, res) {
+const registerAbsence = function (req, res) {
   const body = req.body;
-  firebase.collection('pay_cycles').doc(body.period_end.toString())
+  db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'absences_counter': increment1
+      'absences': fieldvalue.arrayUnion(body.absence_date)
     });
-    return res.send(body.username);
+  return res.send(body.absence_date.toString());
 }
 
-const removeAbsence = function (req, res) {
+const deleteAbsence = function (req, res) {
   const body = req.body;
-  firebase.collection('pay_cycles').doc(body.period_end.toString())
+  db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
-      'absences_counter': decrement1
+      'absences': fieldvalue.arrayRemove(body.absence_date)
     });
-    return res.send(body.username);
+  return res.send(body.absence_date.toString());
 }
 
 const deductSalary = function (req, res) {
@@ -113,6 +110,79 @@ const deductSalary = function (req, res) {
     });
 }
 
+const getEmployees = function (req, res) {
+  var employees = {};
+  db.collection('employees').get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      const employee = doc.data();
+      if (employee.active) {
+        employees[employee.username] = employee;
+      }
+    });
+    return res.send(employees);
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer empleados');
+  })
+}
+
+const getPayCycles = function (req, res) {
+  var pay_cycles = {};
+  db.collection('pay_cycles').get().then(function (querySnapshot) {
+    querySnapshot.forEach(function (doc) {
+      const pay_cycle = doc.data();
+      pay_cycles[pay_cycle.period_end.toString()] = pay_cycle;
+    });
+    return res.send(pay_cycles);
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer ciclos de pago');
+  })
+}
+
+const getMyEmployee = function (req, res) {
+  const username = req.user.username;
+  db.collection('employees').doc(username).get().then(function (doc) {
+    return res.send(doc.data());
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer ciclos de pago');
+  });
+}
+
+const getMyPayHistory = function (req, res) {
+  const username = req.user.username;
+  var pay_history = {};
+  db.collection('pay_cycles').get().then(function (querySnapshot) {
+    var index = 1;
+    const aux = new Promise(function (resolve, reject) {
+      querySnapshot.forEach(function (doc) {
+        const pay_cycle = doc.data();
+        const period_end_str = pay_cycle.period_end.toString();
+        db.collection('pay_cycles').doc(period_end_str)
+          .collection('employees').doc(username).get().then(function (doc) {
+            const employee = doc.data();
+            pay_history[period_end_str] = {
+              'period_start': pay_cycle.period_start,
+              'period_end': pay_cycle.period_end,
+              'pay_date': pay_cycle.pay_date,
+              'amount': employee.amount,
+              'deductions': employee.deductions,
+              'net_pay': employee.net_pay,
+              'absences': employee.absences
+            }
+            if (index == querySnapshot.size) {
+              resolve();
+            }
+            index = index + 1;
+          });
+      });
+    });
+    aux.then(function () {
+      return res.send(pay_history);
+    })
+  }).catch(function (_) {
+    return res.status(500).send('Error al leer los ciclos de pago');
+  });
+}
+
 module.exports = {
   createEmployee: createEmployee,
   updateSalary: updateSalary,
@@ -120,7 +190,11 @@ module.exports = {
   rehireEmployee: rehireEmployee,
   newPayCycle: newPayCycle,
   resetPayCycle: newPayCycle,
-  addAbsence: addAbsence,
-  removeAbsence: removeAbsence,
-  deductSalary: deductSalary
+  registerAbsence: registerAbsence,
+  deleteAbsence: deleteAbsence,
+  deductSalary: deductSalary,
+  getEmployees: getEmployees,
+  getMyEmployee: getMyEmployee,
+  getPayCycles: getPayCycles,
+  getMyPayHistory: getMyPayHistory
 }

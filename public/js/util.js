@@ -7,9 +7,22 @@ function formatDate(rawDate) {
 }
 
 function getPrintableDate(date) {
-  return inputDate.substring(0, 4) + '-'
-    + inputDate.substring(5, 7) + '-'
-    + inputDate.substring(8, 10);
+  return date.substring(6, 8) + '-'
+    + date.substring(4, 6) + '-'
+    + date.substring(0, 4);
+}
+
+function getPrintablePrice(price) {
+  return "$ " + price + ".00";
+}
+
+function getPrintablePriceWithZero(price) {
+  var i ;
+  var newPrice = "";
+  for (i = 1; i < price.length; i++) {
+    newPrice += price[i] ;
+  }
+  return "$ " + newPrice + ".00";
 }
 
 function hideLoading() {
@@ -19,4 +32,32 @@ function hideLoading() {
     loading.style.display = "none";
     info.style.display = "block";
   }
+}
+
+function resetPassword(username) {
+  json_to_send = {
+    "username": username
+  };
+
+  json_to_send = JSON.stringify(json_to_send);
+
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/resetPass',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'PATCH',
+    dataType: 'json',
+    data: json_to_send,
+    success: function (data) {
+      alert("La nueva contraseña de " + username + " es:" + data["pass"]);
+      console.log("reseting pass");
+      // updatePass();
+      // window.location = './signup.html'
+    },
+    error: function (error_msg) {
+      alert((error_msg['responseText']));
+    }
+  });
 }

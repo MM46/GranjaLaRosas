@@ -65,6 +65,207 @@ function nominaEspecifica(id) {
   document.location.href = url;
 }
 
+function loadInitialInfo(){
+
+  var lista = document.getElementById("nominas");
+
+  var title = document.createElement("h2");
+  title.innerText = "Nóminas"
+
+  var ul = document.createElement("ul");
+  ul.setAttribute("class","list-group list-group-flush");
+
+  var container = document.createElement("div");
+  container.setAttribute("class","container");
+
+  var divRow = document.createElement("div");
+  divRow.setAttribute("id", "info-usuarios");
+
+  var firstRow = document.createElement("div");
+  firstRow.setAttribute("class", "row");
+
+  divRow.innerHTML += "<hr>"
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Fecha de Inicio</label></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Fecha de Finalización</label></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Día de Paga</label></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Cantidad</label></div>";
+
+
+  divRow.appendChild(firstRow);
+  container.appendChild(divRow);
+  ul.appendChild(container);
+
+  lista.appendChild(title);
+  lista.appendChild(ul);
+}
+
+loadInitialInfo()
+
+function writeNomina(nomina) {
+  var lista = document.getElementById("nominas");
+
+
+  var firstRow = document.createElement("div");
+  firstRow.setAttribute('class', 'row');
+
+  var periodStart = nomina.period_start;
+  var periodEnd = nomina.period_end;
+  var payDate = nomina.pay_date;
+  var amount = nomina.paid;
+  var employees = nomina.employees;
+
+  firstRow.setAttribute('id', "info" + periodStart);
+  firstRow.setAttribute('periodStart', periodStart);
+  firstRow.setAttribute('periodEnd', periodEnd);
+  firstRow.setAttribute('payDate', payDate);
+  firstRow.setAttribute('amount', amount);
+  firstRow.setAttribute('employees', JSON.stringify(employees));
+
+  var moreInfoButton = document.createElement("button");
+  moreInfoButton.setAttribute("id", "info" + periodStart);
+  moreInfoButton.setAttribute("type", "button");
+  moreInfoButton.setAttribute("class", "btn btn-light btn-block");
+  moreInfoButton.setAttribute("onclick","getAllInfoNomina(id)");
+  moreInfoButton.setAttribute("data-toggle","modal");
+  moreInfoButton.setAttribute("data-target","#myModal");
+  moreInfoButton.innerText = "Ver toda la información";
+
+  
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodStart+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodEnd+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+payDate+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePriceWithZero(amount)+"</small></div>";
+
+  firstRow.innerHTML += "<br>"
+  firstRow.innerHTML += "<br>"
+
+
+  firstRow.appendChild(moreInfoButton);
+
+  lista.appendChild(firstRow);
+
+}
+
+function getAllInfoNomina(nomina) {
+
+  var periodStart = $("#"+nomina).attr("periodStart");
+  var periodEnd = $("#"+nomina).attr("periodEnd");
+  var payDate = $("#"+nomina).attr("payDate");
+  var amount = $("#"+nomina).attr("amount");
+  var employees = $("#"+nomina).attr("employees");
+
+  var lista = document.getElementById("allInfo");
+  lista.innerHTML = "";
+
+    var periodStartRow = document.createElement("div");
+    periodStartRow.setAttribute('class', 'row');
+  
+    periodStartRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Inicio</small></div>";
+    periodStartRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodStart+"</small></div>";
+
+    lista.appendChild(periodStartRow);
+
+    var periodEndRow = document.createElement("div");
+    periodEndRow.setAttribute('class', 'row');
+  
+    periodEndRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Finalización</small></div>";
+    periodEndRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodEnd+"</small></div>";
+
+    lista.appendChild(periodEndRow);
+
+    var payDateRow = document.createElement("div");
+    payDateRow.setAttribute('class', 'row');
+  
+    payDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Día de Paga</small></div>";
+    payDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+payDate+"</small></div>";
+
+    lista.appendChild(payDateRow);
+
+    var amountRow = document.createElement("div");
+    amountRow.setAttribute('class', 'row');
+  
+    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Cantidad</small></div>";
+    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePriceWithZero(amount)+"</small></div>";
+
+    lista.appendChild(amountRow);
+
+
+    var lista2 = document.getElementById("employeesInfo");
+    lista2.innerHTML = "";
+
+    var employeesRow = document.createElement("div");
+    employeesRow.setAttribute('class', 'row');
+    employeesRow.setAttribute('id', 'employeesRow');
+  
+    employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Nombre Completo</small></div>";
+    employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Ausencias</small></div>";
+    employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Deducciones</small></div>";
+    employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Cantidad</small></div>";
+    employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Pago Neto</small></div>";
+    employeesRow.innerHTML += "<br>";
+
+    lista2.appendChild(employeesRow);
+
+    employees = JSON.parse(employees);
+       
+    $.each(employees, function(index, employee) {
+      console.log("empname = " + employee.name);
+      var employeesRow = document.createElement("div");
+      employeesRow.setAttribute('class', 'row');
+          
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.name +"</small></div>";
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.abscences +"</small></div>";
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.deductions) +"</small></div>";
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.amount) +"</small></div>";
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.net_pay) +"</small></div>";
+      lista2.appendChild(employeesRow);
+      });
+
+
+    // var addSalaryRow = document.createElement("div");
+    // addSalaryRow.setAttribute('class', 'row');
+    // addSalaryRow.setAttribute('id', username);
+    
+
+    // var addSalaryButton = document.createElement("button");
+    // addSalaryButton.setAttribute("id", username);
+    // addSalaryButton.setAttribute("type", "button");
+    // addSalaryButton.setAttribute("class", "btn btn-success btn-block");
+    // addSalaryButton.setAttribute("onclick","agregarSalario(id)");
+    // addSalaryButton.innerText = "Agregar Salario";
+
+    // lista2.appendChild(addSalaryButton);
+
+    // var resetPasswordButton = document.createElement("button");
+    // resetPasswordButton.setAttribute("id", username);
+    // resetPasswordButton.setAttribute("type", "button");
+    // resetPasswordButton.setAttribute("class", "btn btn-primary btn-block");
+    // resetPasswordButton.setAttribute("onclick","resetPassword(id)");
+    // resetPasswordButton.innerText = "Reestablecer Contraseña";
+
+    // lista2.appendChild(resetPasswordButton);
+    
+    var modalfooter = document.getElementById("modalfooter");
+    modalfooter.innerHTML = "";
+
+    // var terminateEmployeeButton = document.createElement("button");
+    // terminateEmployeeButton.setAttribute("id", username);
+    // terminateEmployeeButton.setAttribute("type", "button");
+    // terminateEmployeeButton.setAttribute("class", "btn btn-link");
+    // terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
+    // terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+    
+    var closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("class", "btn btn-danger");
+    closeButton.setAttribute("data-dismiss","modal");
+    closeButton.innerText = "Cerrar";
+
+    // modalfooter.appendChild(terminateEmployeeButton);
+    modalfooter.appendChild(closeButton);
+
+}
+
 function loadNominas() {
     $.ajax({
       url: 'https://granjalasrosasback.web.app/getAllPayCycles',
@@ -75,104 +276,26 @@ function loadNominas() {
       method: 'GET',
       dataType: 'json',
       success: function (data) {
-        console.log("nominas");
         console.log(data);
-        var lista = document.getElementById("nominas");
 
-        var firstRow = document.createElement("div");
-        firstRow.setAttribute('class', 'row');
-        // firstRow.setAttribute('style', 'background:#22B3CD');
-
-        var periodStartCol = document.createElement("div");
-        periodStartCol.setAttribute('class', 'col');
-        periodStartCol.setAttribute('id', 'period_start');
-
-        var periodStartText = document.createElement("h4");
-        periodStartText.setAttribute('class', 'title-label');
-        // firstRow.setAttribute('style', 'color:white');
-        periodStartText.innerText = "Fecha de Inicio:"
-
-        var periodEndCol = document.createElement("div");
-        periodEndCol.setAttribute('class', 'col');
-        periodEndCol.setAttribute('id', 'period_end');
-
-        var periodEndText = document.createElement("h4");
-        periodEndText.setAttribute('class', 'title-label');
-        periodEndText.innerText = "Fecha de Finalización:"
-
-        var payDateCol = document.createElement("div");
-        payDateCol.setAttribute('class', 'col');
-        payDateCol.setAttribute('id', 'pay_date');
-
-        var payDateText = document.createElement("h4");
-        payDateText.setAttribute('class', 'title-label');
-        payDateText.innerText = "Dia de Paga:"
-        
-        periodStartCol.appendChild(periodStartText);
-        firstRow.appendChild(periodStartCol);
-
-        periodEndCol.appendChild(periodEndText);
-        firstRow.appendChild(periodEndCol);
-
-        payDateCol.appendChild(payDateText);
-        firstRow.appendChild(payDateCol);
-
-        lista.appendChild(firstRow);
-        
-        var divRow = document.createElement("div");
-        divRow.setAttribute('class', 'row');
-        divRow.setAttribute('style', 'background:gray');
-        lista.appendChild(divRow);
-
-        $.each(data, function(index, nominas) {
-          var secondRow = document.createElement("div");
-          secondRow.setAttribute('class', 'row');
-  
-          var periodStartCol2 = document.createElement("div");
-          periodStartCol2.setAttribute('class', 'col');
-          // periodStartCol2.setAttribute('id', 'period_start');
-  
-          var periodStartText2 = document.createElement("p");
-          periodStartText2.setAttribute('class', 'title-label');
-          periodStartText2.innerText = nominas.period_start;
-  
-          var periodEndCol2 = document.createElement("div");
-          periodEndCol2.setAttribute('class', 'col');
-          // periodEndCol2.setAttribute('id', 'period_end');
-  
-          var periodEndText2 = document.createElement("p");
-          periodEndText2.setAttribute('class', 'title-label');
-          periodEndText2.innerText = nominas.period_end;
-  
-          var payDateCol2 = document.createElement("div");
-          payDateCol2.setAttribute('class', 'col');
-          // payDateCol2.setAttribute('id', 'pay_date');
-  
-          var payDateText2 = document.createElement("p");
-          payDateText2.setAttribute('class', 'title-label');
-          payDateText2.innerText = nominas.pay_date;
+        $.each(data, function(index, nomina) {
+          writeNomina(nomina);
+          // var lista2 = document.getElementById("employeesRow");
+          // lista2.innerHTML += "hola";
+      
+          //   $.each(nomina.employees, function(index, employee) {
+          //     console.log("empname = " + employee.name);
+          //   var employeesRow = document.createElement("div");
+          //   employeesRow.setAttribute('class', 'row');
           
-          periodStartCol2.appendChild(periodStartText2);
-          secondRow.appendChild(periodStartCol2);
-  
-          periodEndCol2.appendChild(periodEndText2);
-          secondRow.appendChild(periodEndCol2);
-  
-          payDateCol2.appendChild(payDateText2);
-          secondRow.appendChild(payDateCol2);
-
-          var employeesCol = document.createElement("div");
-          employeesCol.setAttribute('class', 'col');
-          employeesCol.setAttribute('class', 'btn btn-info btn-lg');
-          employeesCol.setAttribute('style',"display: block;");
-          employeesCol.setAttribute('id', index);
-          employeesCol.setAttribute("onclick","nominaEspecifica(id)");
-          var employeesSpan = document.createElement("span");
-          employeesSpan.setAttribute('class', 'fa fa-arrow-circle-right');
-          employeesCol.appendChild(employeesSpan);
-          secondRow.appendChild(employeesCol);
-
-          lista.appendChild(secondRow);
+          //   employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.name +"</small></div>";
+          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Ausencias</small></div>";
+          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Deducciones</small></div>";
+          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Cantidad</small></div>";
+          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Pago Neto</small></div>";
+        
+          //   lista2.appendChild(employeesRow);
+          // });
         });
 
         var loading = document.getElementById("loading");

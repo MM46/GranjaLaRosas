@@ -154,6 +154,65 @@ function loadGastos() {
         var lista = document.getElementById("gastos");
         lista.innerHTML = "";
 
+        var infoRow = document.createElement("div");
+        infoRow.setAttribute('class', 'user-label');
+        var infoCol = document.createElement("div");
+        infoCol.setAttribute('class', 'user-label');
+        var infoText = document.createElement("p");
+        infoText.setAttribute('class', 'user-label');
+        infoText.innerText = "";
+
+        infoCol.appendChild(infoText);
+        infoRow.appendChild(infoCol);
+        lista.appendChild(infoRow);
+
+        var ingresosRow = document.createElement("div");
+        ingresosRow.setAttribute('class', 'user-label');
+
+        var ingresosCol = document.createElement("div");
+        ingresosCol.setAttribute('class', 'col');
+        var ingresosText = document.createElement("p");
+        ingresosText.setAttribute('class', 'user-label');
+        ingresosText.innerText = "Ingresos:";
+
+        var ingresosCol2 = document.createElement("div");
+        ingresosCol2.setAttribute('class', 'col');
+        var ingresosText2 = document.createElement("p");
+        ingresosText2.setAttribute('class', 'user-label');
+        ingresosText2.innerText = "$" + data.earnings + ".00";
+
+        ingresosCol.appendChild(ingresosText);
+        ingresosRow.appendChild(ingresosCol);
+        ingresosCol2.appendChild(ingresosText2);
+        ingresosRow.appendChild(ingresosCol2);
+
+        lista.appendChild(ingresosRow);
+
+        var gastosRow = document.createElement("div");
+        gastosRow.setAttribute('class', 'user-label');
+        var gastosCol = document.createElement("div");
+        gastosCol.setAttribute('class', 'user-label');
+        var gastosText = document.createElement("p");
+        gastosText.setAttribute('class', 'user-label');
+        gastosText.innerText = "Gastos: $" + data.expenses + ".00";
+
+        gastosCol.appendChild(gastosText);
+        gastosRow.appendChild(gastosCol);
+        lista.appendChild(gastosRow);
+
+        var utilidadNetaRow = document.createElement("div");
+        utilidadNetaRow.setAttribute('class', 'user-label');
+        var utilidadNetaCol = document.createElement("div");
+        utilidadNetaCol.setAttribute('class', 'user-label');
+        var utilidadNetaText = document.createElement("p");
+        utilidadNetaText.setAttribute('class', 'user-label');
+        // dateText.setAttribute('id', index+'date');
+        utilidadNetaText.innerText = "Utilidad Neta: $" + data.net + ".00";
+
+        utilidadNetaCol.appendChild(utilidadNetaText);
+        utilidadNetaRow.appendChild(utilidadNetaCol);
+        lista.appendChild(utilidadNetaRow);
+
         var divisionRow = document.createElement("div");
         divisionRow.setAttribute('class', 'user-label');
         var divisionCol = document.createElement("div");
@@ -279,56 +338,6 @@ function loadGastos() {
             lista.appendChild(row2);
 
            });
-
-        //     var costCol = document.createElement("div");
-        //     costCol.setAttribute('class', 'col-md-3');
-        //     var costText = document.createElement("label");
-        //     costText.setAttribute('class', 'user-label');
-        //     costText.setAttribute('id', index+'cost');
-        //     costText.innerText = gastos[0].cost;
-
-        //     var descriptionCol = document.createElement("div");
-        //     descriptionCol.setAttribute('class', 'col-md-4');
-        //     var descriptionText = document.createElement("label");
-        //     descriptionText.setAttribute('class', 'user-label');
-        //     descriptionText.setAttribute('id', index+'description');
-        //     descriptionText.innerText = gastos[0].description;
-
-        //     var editCol = document.createElement("a");
-        //     editCol.setAttribute('class', "btn btn-outline-info");
-        //     editCol.setAttribute('id', index);
-        //     editCol.setAttribute("onclick","editarGasto(id)");
-        //     var editSpan = document.createElement("span");
-        //     editSpan.setAttribute('class', 'fa fa-pencil');
-
-        //     var removeCol = document.createElement("button");
-        //     removeCol.setAttribute('class', 'btn btn-outline-danger');
-            
-        //     removeCol.setAttribute('id', index);
-        //     removeCol.setAttribute("onclick","removerGasto(id)");
-        //     var removeSpan = document.createElement("span");
-        //     removeSpan.setAttribute('class', 'fa fa-remove');
-        //     // removeSpan.setAttribute('style', 'background:red');
-
-
-            
-
-            // dateCol.appendChild(dateText);
-            // dateRow.appendChild(dateCol);
-
-        //     costCol.appendChild(costText);
-        //     row.appendChild(costCol);
-
-        //     descriptionCol.appendChild(descriptionText);
-        //     row.appendChild(descriptionCol);
-
-        //     editCol.appendChild(editSpan);
-        //     row.appendChild(editCol);
-
-        //     removeCol.appendChild(removeSpan);
-        //     row.appendChild(removeCol);
-
-            // lista.appendChild(dateRow);
         })
         var loading = document.getElementById("loading");
         var info = document.getElementById("info");

@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body >
   <div class="bs-example">
     <nav class="navbar navbar-expand-md navbar-light navigationBar">
         <a href="./signUp.html"><img class="logo" src="./img/lasRosasLogo.png" alt="Granja Las Rosas Logo"></a>
@@ -21,17 +21,10 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
             <div class="navbar-nav">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Empleados</a>
-                    <div class="dropdown-menu">
-                        <a href="./empleadosRegistrados.html" class="dropdown-item">Empleados Registrados</a>
-                        <a href="./registroEmpleado.html" class="dropdown-item">Registrar Empleado</a>
-                        <a href="./passwordForgotten.html" class="dropdown-item">Cambiar Contraseña de Empleado</a>
-                    </div>
-                </div>
+                <a href="./empleadosRegistrados.html" class="nav-item nav-link">Empleados</a>
                 <a href="./nominas.html" class="nav-item nav-link">Nóminas</a>
                 <a href="./gastos.html" class="nav-item nav-link">Gastos</a>
-                <a href="./sembradios.html" style="margin-right: 50px;" class="nav-item nav-link">Sembradíos</a>
+                <a href="./sembradios.html" class="nav-item nav-link">Sembradíos</a>
             </div>
             <div class="navbar-nav">
                 <a href="#" class="nav-item nav-link btn btn-success logoutButton" id="logout_button">Cerrar Sesión</a>
@@ -40,31 +33,109 @@
     </nav>
 </div>
 
-<section class="main">
+<section  class="container-fluid">
     <div class="formStyle" >
         <div id="loading" class="spinner-border m-5" role="status" style="display: block">
             <span class="sr-only">Loading...</span>
           </div>
           <div id="info" style="display: none">
-            <div class="form-group has-search">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" class="form-control" onkeyup="loadData()" id="searchEmployee" placeholder="Buscar Empleado">
+
+            <div class="row">
+              <div class="col">
               </div>
-        <div class="row">
-           <div class="col">
-            <h2 class="title-label">Empleados Registrados</h2>
-           </div>
-       </div>
-       <div id="usuarios">
-        <div class="row" >
-            <div class="col" style="background: grey;" >
-             
+              <div class="col"></div>
+              <div class="col-md-5" >
+                <button onclick="location.href='./registroEmpleado.html';" type="button" class="button red"><span class="fa fa-plus-circle"></span>
+                  Registrar Empleado </button>                
+              </div>
+          </div>
+          <br>
+            <div class="form-group has-search">
+                <span class="fa fa-user-circle-o form-control-feedback"></span>
+                <input type="text" class="form-control" id="searchEmployee" placeholder="Empleado que deseas buscar">
+              </div>
+              
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col"></div>
+                <div class="col-md-3" >
+                    <button onclick="loadData()" class="button blue"><span class="fa fa-search"></span> Buscar </button>
+                    <!-- <button onclick="myFunction()" class="button blue"> Buscar </button> -->
+                </div>
             </div>
-        </div>
+        
+       <div id="usuarios">
+
        </div>
     </div>
 
    </div>
+
+    <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Informacion de Empleado</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" id = "allInfo">
+        
+        </div>
+
+        <div class="modal-header">
+            <h4 class="modal-title">Salarios</h4>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body" id = "salariesInfo">
+          
+          </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer" id = "modalfooter">
+          <!-- <button type="button" class="btn btn-link" data-dismiss="modal">Dar de Baja a Empleado</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button> -->
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addSalary">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Informacion de Empleado</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body" id = "allInfo">
+        
+        </div>
+
+        <div class="modal-header">
+            <h4 class="modal-title">Salarios</h4>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body" id = "salariesInfo">
+          
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+   
   </section>
 
     <script type="text/javascript" src="js/lib/jquery.js"></script>
