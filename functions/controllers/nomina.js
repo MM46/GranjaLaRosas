@@ -1,4 +1,7 @@
-const { db, fieldvalue } = require('../database');
+const { db, firebase, fieldvalue } = require('../database');
+
+const increment1 = fieldvalue.increment(1);
+const decrement1 = fieldvalue.increment(-1);
 
 const createEmployee = function (req, res) {
   const body = req.body;
@@ -80,7 +83,7 @@ const addAbsence = function (req, res) {
     .collection('employees').doc(body.username).update({
       'absences_counter': increment1
     });
-  return res.send(body.absence_date.toString());
+  return res.send(body.username);
 }
 
 const removeAbsence = function (req, res) {
@@ -89,7 +92,7 @@ const removeAbsence = function (req, res) {
     .collection('employees').doc(body.username).update({
       'absences_counter': decrement1
     });
-  return res.send(body.absence_date.toString());
+  return res.send(body.username);
 }
 
 const deductSalary = function (req, res) {
