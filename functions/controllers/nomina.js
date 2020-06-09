@@ -1,5 +1,8 @@
 const { db, fieldvalue } = require('../database');
 
+const increment1 = fieldvalue.increment(1);
+const decrement1 = fieldvalue.increment(-1);
+
 const createEmployee = function (req, res) {
   const body = req.body;
   db.collection('employees').doc(body.username).set({
@@ -80,7 +83,15 @@ const registerAbsence = function (req, res) {
     .collection('employees').doc(body.username).update({
       'absences': fieldvalue.arrayUnion(body.absence_date)
     });
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   return res.send(body.absence_date.toString());
+=======
+  return res.send(body.username);
+>>>>>>> Stashed changes
+=======
+  return res.send(body.username);
+>>>>>>> Stashed changes
 }
 
 const deleteAbsence = function (req, res) {
@@ -89,7 +100,15 @@ const deleteAbsence = function (req, res) {
     .collection('employees').doc(body.username).update({
       'absences': fieldvalue.arrayRemove(body.absence_date)
     });
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   return res.send(body.absence_date.toString());
+=======
+  return res.send(body.username);
+>>>>>>> Stashed changes
+=======
+  return res.send(body.username);
+>>>>>>> Stashed changes
 }
 
 const deductSalary = function (req, res) {
