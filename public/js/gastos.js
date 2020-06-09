@@ -152,79 +152,41 @@ function loadGastos() {
         // console.log("Gastos");
         console.log(data);
         var lista = document.getElementById("gastos");
-        lista.innerHTML = "";
 
-        var infoRow = document.createElement("div");
-        infoRow.setAttribute('class', 'user-label');
-        var infoCol = document.createElement("div");
-        infoCol.setAttribute('class', 'user-label');
-        var infoText = document.createElement("p");
-        infoText.setAttribute('class', 'user-label');
-        infoText.innerText = "";
+        var title = document.createElement("h2");
+        title.innerText = "Empleados Registrados"
+      
+        var ul = document.createElement("ul");
+        ul.setAttribute("class","list-group list-group-flush");
+      
+        var container = document.createElement("div");
+        container.setAttribute("class","container");
+      
+        var divRow = document.createElement("div");
+        divRow.setAttribute("id", "info-usuarios");
+      
+        var firstRow = document.createElement("div");
+        firstRow.setAttribute("class", "row");
+      
+        divRow.innerHTML += "<hr>"
+        firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Ingresos</label></div>";
+        firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Gastos</label></div>";
+        firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Utilidad Neta</label></div>";
 
-        infoCol.appendChild(infoText);
-        infoRow.appendChild(infoCol);
-        lista.appendChild(infoRow);
+        var secondRow = document.createElement("div");
+        secondRow.setAttribute("class", "row");
+      
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.earnings) +"</label></div>";
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePriceWithZero(data.expenses) +"</label></div>";
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.net) +"</label></div>";
 
-        var ingresosRow = document.createElement("div");
-        ingresosRow.setAttribute('class', 'user-label');
-
-        var ingresosCol = document.createElement("div");
-        ingresosCol.setAttribute('class', 'col');
-        var ingresosText = document.createElement("p");
-        ingresosText.setAttribute('class', 'user-label');
-        ingresosText.innerText = "Ingresos:";
-
-        var ingresosCol2 = document.createElement("div");
-        ingresosCol2.setAttribute('class', 'col');
-        var ingresosText2 = document.createElement("p");
-        ingresosText2.setAttribute('class', 'user-label');
-        ingresosText2.innerText = "$" + data.earnings + ".00";
-
-        ingresosCol.appendChild(ingresosText);
-        ingresosRow.appendChild(ingresosCol);
-        ingresosCol2.appendChild(ingresosText2);
-        ingresosRow.appendChild(ingresosCol2);
-
-        lista.appendChild(ingresosRow);
-
-        var gastosRow = document.createElement("div");
-        gastosRow.setAttribute('class', 'user-label');
-        var gastosCol = document.createElement("div");
-        gastosCol.setAttribute('class', 'user-label');
-        var gastosText = document.createElement("p");
-        gastosText.setAttribute('class', 'user-label');
-        gastosText.innerText = "Gastos: $" + data.expenses + ".00";
-
-        gastosCol.appendChild(gastosText);
-        gastosRow.appendChild(gastosCol);
-        lista.appendChild(gastosRow);
-
-        var utilidadNetaRow = document.createElement("div");
-        utilidadNetaRow.setAttribute('class', 'user-label');
-        var utilidadNetaCol = document.createElement("div");
-        utilidadNetaCol.setAttribute('class', 'user-label');
-        var utilidadNetaText = document.createElement("p");
-        utilidadNetaText.setAttribute('class', 'user-label');
-        // dateText.setAttribute('id', index+'date');
-        utilidadNetaText.innerText = "Utilidad Neta: $" + data.net + ".00";
-
-        utilidadNetaCol.appendChild(utilidadNetaText);
-        utilidadNetaRow.appendChild(utilidadNetaCol);
-        lista.appendChild(utilidadNetaRow);
-
-        var divisionRow = document.createElement("div");
-        divisionRow.setAttribute('class', 'user-label');
-        var divisionCol = document.createElement("div");
-        divisionCol.setAttribute('class', 'user-label');
-        var divisionText = document.createElement("p");
-        divisionText.setAttribute('class', 'user-label');
-        // dateText.setAttribute('id', index+'date');
-        divisionText.innerText = "";
-
-        divisionCol.appendChild(divisionText);
-        divisionRow.appendChild(divisionCol);
-        lista.appendChild(divisionRow);
+        divRow.appendChild(firstRow);
+        divRow.appendChild(secondRow);
+        container.appendChild(divRow);
+        ul.appendChild(container);
+      
+        lista.appendChild(title);
+        lista.appendChild(ul);
         
         var row = document.createElement("div");
         row.setAttribute('class', 'row');
