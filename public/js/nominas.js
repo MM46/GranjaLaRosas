@@ -58,12 +58,6 @@ function checkingAdmin() {
 getLogin()
 checkingAdmin()
 
-function nominaEspecifica(id) {
-  console.log("nominaespecifica = " + id);
-  var nomina = id
-      url = './nominaEspecifica.html?nomina=' + encodeURIComponent(nomina);
-  document.location.href = url;
-}
 
 function loadInitialInfo(){
 
@@ -145,6 +139,35 @@ function writeNomina(nomina) {
   lista.appendChild(firstRow);
 
 }
+function addAbsence(username){
+var payDate = $("#"+username).attr("payDate");
+
+  json_to_send = {
+    'username': username,
+    'pay_date': payDate
+  };
+
+  json_to_send = JSON.stringify(json_to_send);
+  console.log(json_to_send);
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/addAbsence',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'POST',
+    dataType: 'text',
+    data: json_to_send,
+    success: function (data) {
+      // alert(data);
+      alert("Las ausencia se ha agregado exitosamente.");
+      window.location = './nominas.html'
+    },
+    error: function (error_msg) {
+      alert((error_msg['responseText']));
+    }
+  });
+}
 
 function getAllInfoNomina(nomina) {
 
@@ -161,7 +184,7 @@ function getAllInfoNomina(nomina) {
     periodStartRow.setAttribute('class', 'row');
   
     periodStartRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Inicio</small></div>";
-    periodStartRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodStart+"</small></div>";
+    periodStartRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodStart)+"</small></div>";
 
     lista.appendChild(periodStartRow);
 
@@ -169,7 +192,7 @@ function getAllInfoNomina(nomina) {
     periodEndRow.setAttribute('class', 'row');
   
     periodEndRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Finalización</small></div>";
-    periodEndRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodEnd+"</small></div>";
+    periodEndRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodEnd)+"</small></div>";
 
     lista.appendChild(periodEndRow);
 
@@ -177,7 +200,7 @@ function getAllInfoNomina(nomina) {
     payDateRow.setAttribute('class', 'row');
   
     payDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Día de Paga</small></div>";
-    payDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+payDate+"</small></div>";
+    payDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(payDate)+"</small></div>";
 
     lista.appendChild(payDateRow);
 
@@ -202,14 +225,14 @@ function getAllInfoNomina(nomina) {
     employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Deducciones</small></div>";
     employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Cantidad</small></div>";
     employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Pago Neto</small></div>";
-    employeesRow.innerHTML += "<br>";
+    lista2.innerHTML += "</hr>";
 
     lista2.appendChild(employeesRow);
 
     employees = JSON.parse(employees);
        
     $.each(employees, function(index, employee) {
-      console.log("empname = " + employee.name);
+
       var employeesRow = document.createElement("div");
       employeesRow.setAttribute('class', 'row');
           
@@ -219,22 +242,60 @@ function getAllInfoNomina(nomina) {
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.amount) +"</small></div>";
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.net_pay) +"</small></div>";
       lista2.appendChild(employeesRow);
+
+      var abscensesRow = document.createElement("div");
+      abscensesRow.setAttribute('class', 'row');
+
+      var addCol = document.createElement("div");
+      addCol.setAttribute('class', 'col');
+      
+      var addAbsencesButton = document.createElement("button");
+      addAbsencesButton.setAttribute("id", employee.username);
+      addAbsencesButton.setAttribute("payDate", payDate);
+      addAbsencesButton.setAttribute("type", "button");
+      addAbsencesButton.setAttribute("class", "btn btn-link");
+      addAbsencesButton.setAttribute("onclick","addAbsence(id)");
+      addAbsencesButton.innerText = "Agregar Ausencia  ";
+
+      var addSpan = document.createElement("span");
+      addSpan.setAttribute("class", "fa fa-plus-circle");
+
+      // var terminateEmployeeButton = document.createElement("button");
+      // terminateEmployeeButton.setAttribute("id", username);
+      // terminateEmployeeButton.setAttribute("type", "button");
+      // terminateEmployeeButton.setAttribute("class", "btn btn-link");
+      // terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
+      // terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+
+      var deleteCol = document.createElement("div");
+      deleteCol.setAttribute('class', 'col');
+
+      var deleteAbsencesButton = document.createElement("button");
+      deleteAbsencesButton.setAttribute("id", employee.username);
+      deleteAbsencesButton.setAttribute("type", "button");
+      deleteAbsencesButton.setAttribute("class", "btn btn-link");
+      // addAbsencesButton.setAttribute("onclick","agregarSalario(id)");
+      deleteAbsencesButton.innerText = "Reducir Ausencia  ";
+
+      var deleteSpan = document.createElement("span");
+      deleteSpan.setAttribute("class", "fa fa-minus-circle");
+
+      addAbsencesButton.appendChild(addSpan);
+      deleteAbsencesButton.appendChild(deleteSpan);
+      
+
+      addCol.appendChild(addAbsencesButton);
+      deleteCol.appendChild(deleteAbsencesButton);
+
+      abscensesRow.appendChild(addCol);
+      abscensesRow.appendChild(deleteCol);
+
+      // lista2.innerHTML += "<br>"
+      lista2.appendChild(abscensesRow);
+      lista2.innerHTML += "<br><br>"
       });
 
 
-    // var addSalaryRow = document.createElement("div");
-    // addSalaryRow.setAttribute('class', 'row');
-    // addSalaryRow.setAttribute('id', username);
-    
-
-    // var addSalaryButton = document.createElement("button");
-    // addSalaryButton.setAttribute("id", username);
-    // addSalaryButton.setAttribute("type", "button");
-    // addSalaryButton.setAttribute("class", "btn btn-success btn-block");
-    // addSalaryButton.setAttribute("onclick","agregarSalario(id)");
-    // addSalaryButton.innerText = "Agregar Salario";
-
-    // lista2.appendChild(addSalaryButton);
 
     // var resetPasswordButton = document.createElement("button");
     // resetPasswordButton.setAttribute("id", username);
