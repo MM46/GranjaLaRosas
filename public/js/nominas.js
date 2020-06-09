@@ -131,9 +131,9 @@ function writeNomina(nomina) {
   moreInfoButton.innerText = "Ver toda la información";
 
   
-  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodStart+"</small></div>";
-  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+periodEnd+"</small></div>";
-  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+payDate+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodStart)+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodEnd)+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(payDate)+"</small></div>";
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePriceWithZero(amount)+"</small></div>";
 
   firstRow.innerHTML += "<br>"
@@ -280,22 +280,6 @@ function loadNominas() {
 
         $.each(data, function(index, nomina) {
           writeNomina(nomina);
-          // var lista2 = document.getElementById("employeesRow");
-          // lista2.innerHTML += "hola";
-      
-          //   $.each(nomina.employees, function(index, employee) {
-          //     console.log("empname = " + employee.name);
-          //   var employeesRow = document.createElement("div");
-          //   employeesRow.setAttribute('class', 'row');
-          
-          //   employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.name +"</small></div>";
-          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Ausencias</small></div>";
-          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Deducciones</small></div>";
-          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Cantidad</small></div>";
-          //   // employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">Pago Neto</small></div>";
-        
-          //   lista2.appendChild(employeesRow);
-          // });
         });
 
         var loading = document.getElementById("loading");

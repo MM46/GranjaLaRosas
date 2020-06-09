@@ -73,9 +73,9 @@ $('#agregarNuevoCiclo').on('click', function () {
   let pay_date = $('#pay_date').val();
 
   json_to_send = {
-    "period_start": period_start,
-    "period_end": period_end,
-    "pay_date" : pay_date
+    "period_start": formatDate(period_start),
+    "period_end": formatDate(period_end),
+    "pay_date" : formatDate(pay_date)
   };
 
   json_to_send = JSON.stringify(json_to_send);
