@@ -1,4 +1,4 @@
-const { db, firebase, fieldvalue } = require('../database');
+const { db, fieldvalue } = require('../database');
 
 const increment1 = fieldvalue.increment(1);
 const decrement1 = fieldvalue.increment(-1);
