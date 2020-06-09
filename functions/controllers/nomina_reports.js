@@ -10,7 +10,7 @@ function getEmployees(condition) {
           employees.push(employee);
         }
       })
-      resolve(employees.sort(function(a, b) {
+      resolve(employees.sort(function (a, b) {
         if (a.active && !b.active) {
           return 1;
         } else if (!a.active && b.active) {
@@ -212,7 +212,7 @@ function getMyPayHistory(username, condition) {
                   'amount': employee.amount,
                   'deductions': employee.deductions,
                   'net_pay': employee.net_pay,
-                  'absences': employee.absences
+                  'absences_counter': employee.absences_counter
                 });
               }
               if (index == querySnapshot.size) {

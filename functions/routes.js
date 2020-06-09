@@ -31,9 +31,8 @@ router.patch('/terminateEmployee', auth.auth, auth.admin,
 router.patch('/rehireEmployee', auth.auth, auth.admin, nomina.rehireEmployee);
 router.post('/newPayCycle', auth.auth, auth.admin, nomina.newPayCycle);
 router.post('/resetPayCycle', auth.auth, auth.admin, nomina.resetPayCycle);
-router.patch('/registerAbsence', auth.auth, auth.admin,
-  nomina.registerAbsence);
-router.patch('/deleteAbsence', auth.auth, auth.admin, nomina.deleteAbsence);
+router.post('/addAbsence', auth.auth, auth.admin, nomina.addAbsence);
+router.post('/removeAbsence', auth.auth, auth.admin, nomina.removeAbsence);
 router.patch('/deductSalary', auth.auth, auth.admin, nomina.deductSalary);
 
 router.get('/getConcepts', auth.auth, auth.admin, concepts.getConcepts);
@@ -41,9 +40,9 @@ router.post('/addConcept', auth.auth, auth.admin, concepts.addConcept);
 router.patch('/removeConcept', auth.auth, auth.admin, concepts.removeConcept);
 router.patch('/updateConcept', auth.auth, auth.admin, concepts.updateConcept);
 
-router.get('/getSiembras', auth.auth, siembras.getSiembras);
-router.post('/addSiembra', auth.auth, siembras.addSiembra);
-router.patch('/removeSiembra', auth.auth, siembras.removeSiembra);
+router.get('/getSiembras', auth.auth, auth.admin, siembras.getSiembras);
+router.post('/addSiembra', auth.auth, auth.admin, siembras.addSiembra);
+router.patch('/removeSiembra', auth.auth, auth.admin, siembras.removeSiembra);
 router.patch('/updateSiembra', auth.auth, siembras.updateSiembra);
 
 // Report endpoints.
