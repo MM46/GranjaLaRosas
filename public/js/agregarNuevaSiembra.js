@@ -78,8 +78,8 @@ $('#agregarSiembra').on('click', function () {
   json_to_send = {
     "season": season+year,
     "seed": seed,
-    "planting_date" : planting_date,
-    "harvest_date": harvest_date,
+    "planting_date" : formatDate(planting_date),
+    "harvest_date": formatDate(harvest_date),
     "progress" : progress,
   };
 

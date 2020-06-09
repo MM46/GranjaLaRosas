@@ -140,11 +140,11 @@ function writeNomina(nomina) {
 
 }
 function addAbsence(username){
-var payDate = $("#"+username).attr("payDate");
+var period_end = $("#"+username).attr("periodEnd");
 
   json_to_send = {
     'username': username,
-    'pay_date': payDate
+    'period_end': period_end
   };
 
   json_to_send = JSON.stringify(json_to_send);

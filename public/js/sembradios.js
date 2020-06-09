@@ -154,61 +154,44 @@ function loadSiembras() {
             lista.appendChild(firstRow);
             firstRow.appendChild(editCol);
 
+            // var lista = document.getElementById("gastos");
+
+      
+        var ul = document.createElement("ul");
+        ul.setAttribute("class","list-group list-group-flush");
+      
+        var container = document.createElement("div");
+        container.setAttribute("class","container");
+      
+        var divRow1 = document.createElement("div");
+        divRow1.setAttribute("id", "info-usuarios");
+      
+        var firstRow1 = document.createElement("div");
+        firstRow1.setAttribute("class", "row");
+      
+        divRow1.innerHTML += "<hr>"
+        firstRow1.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Siembra</label></div>";
+        firstRow1.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Dia de Plantación</label></div>";
+        firstRow1.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Dia de Cosecha</label></div>";
+
+        var secondRow = document.createElement("div");
+        secondRow.setAttribute("class", "row");
+      
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + siembra.seed; +"</label></div>";
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintableDate(siembra.planting_date) +"</label></div>";
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintableDate(siembra.harvest_date)+"</label></div>";
+
+        divRow1.appendChild(firstRow1);
+        divRow1.appendChild(secondRow);
+        container.appendChild(divRow1);
+        ul.appendChild(container);
+      
+        lista.appendChild(ul);
 
             // console.log(siembra);
             var row = document.createElement("div");
             row.setAttribute('class', 'row');
   
-            var col = document.createElement("div");
-            col.setAttribute('class', 'col');
-            row.appendChild(col); 
-  
-            var seedText = document.createElement("label");
-            seedText.setAttribute('class', 'title-label');
-            seedText.innerText = "Siembra: ";
-
-            var seedText2 = document.createElement("label");
-            seedText2.setAttribute('class', 'title-label');
-            seedText2.setAttribute('style',"display: none");
-            seedText2.setAttribute('id', index + "" + index2 + "seed");
-            seedText2.innerText =  siembra.seed;
-
-            seedText.innerText += seedText2.innerText
-
-  
-            var plantingDateText = document.createElement("label");
-            plantingDateText.setAttribute('class', 'title-label');
-            plantingDateText.innerText = "Dia de Plantación: ";
-
-            var plantingDateText2 = document.createElement("label");
-            plantingDateText2.setAttribute('class', 'title-label');
-            plantingDateText2.setAttribute('style',"display: none");
-            plantingDateText2.setAttribute('id', index + "" + index2 + "planting_date");
-            plantingDateText2.innerText =  siembra.planting_date;
-
-            plantingDateText.innerText += plantingDateText2.innerText
-  
-            var harvestDateText = document.createElement("label");
-            harvestDateText.setAttribute('class', 'title-label');
-            harvestDateText.innerText = "Dia de Cosecha: ";
-
-            var harvestDateText2 = document.createElement("label");
-            harvestDateText2.setAttribute('class', 'title-label');
-            harvestDateText2.setAttribute('style',"display: none");
-            harvestDateText2.setAttribute('id', index + "" + index2 + "harvest_date");
-            harvestDateText2.innerText =  siembra.harvest_date;
-
-            harvestDateText.innerText += harvestDateText2.innerText
-  
-  
-            col.appendChild(seedText);
-            col.appendChild(plantingDateText);
-            col.appendChild(harvestDateText);
-
-            col.appendChild(seedText2);
-            col.appendChild(plantingDateText2);
-            col.appendChild(harvestDateText2);
-            // row.appendChild(col);  
 
             var col2 = document.createElement("div");
             col2.setAttribute('class', 'col');
