@@ -100,7 +100,7 @@ $('#registrar_button').on('click', function () {
       // json = JSON.stringify(data);
       alert("Usuario Registrado con Exito. Tu contraseña es:" + data["pass"]);
       // console.log('success: ' + data);
-      // window.location = './empleadosRegistrados.html'
+      window.location = './empleadosRegistrados.html'
     },
     error: function (error_msg) {
       alert((error_msg['responseText']));

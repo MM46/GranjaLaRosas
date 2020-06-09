@@ -94,7 +94,7 @@ function loadInitialInfo(){
 }
 
 loadInitialInfo()
-
+var totalAmount = 0;
 function writeNomina(nomina) {
   var lista = document.getElementById("nominas");
 
@@ -105,14 +105,14 @@ function writeNomina(nomina) {
   var periodStart = nomina.period_start;
   var periodEnd = nomina.period_end;
   var payDate = nomina.pay_date;
-  var amount = nomina.paid;
+  // var amount = nomina.paid;
   var employees = nomina.employees;
 
   firstRow.setAttribute('id', "info" + periodStart);
   firstRow.setAttribute('periodStart', periodStart);
   firstRow.setAttribute('periodEnd', periodEnd);
   firstRow.setAttribute('payDate', payDate);
-  firstRow.setAttribute('amount', amount);
+  // firstRow.setAttribute('amount', amount);
   firstRow.setAttribute('employees', JSON.stringify(employees));
 
   var moreInfoButton = document.createElement("button");
@@ -128,7 +128,7 @@ function writeNomina(nomina) {
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodStart)+"</small></div>";
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodEnd)+"</small></div>";
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(payDate)+"</small></div>";
-  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePriceWithZero(amount)+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(totalAmount)+"</small></div>";
 
   firstRow.innerHTML += "<br>"
   firstRow.innerHTML += "<br>"
@@ -139,14 +139,16 @@ function writeNomina(nomina) {
   lista.appendChild(firstRow);
 
 }
-function addAbsence(username){
-var period_end = $("#"+username).attr("periodEnd");
+function addAbsence(id){
+  console.log("id = " + id);
+  var username = $("#"+id).attr("username");
+  var period_end = $("#"+id).attr("periodEnd");
 
   json_to_send = {
     'username': username,
     'period_end': period_end
   };
-
+  console.log(" per = " + period_end);
   json_to_send = JSON.stringify(json_to_send);
   console.log(json_to_send);
   $.ajax({
@@ -161,6 +163,38 @@ var period_end = $("#"+username).attr("periodEnd");
     success: function (data) {
       // alert(data);
       alert("Las ausencia se ha agregado exitosamente.");
+      window.location = './nominas.html'
+    },
+    error: function (error_msg) {
+      alert((error_msg['responseText']));
+    }
+  });
+}
+
+function deleteAbsence(id){
+  console.log("id = " + id);
+  var username = $("#"+id).attr("username");
+  var period_end = $("#"+id).attr("periodEnd");
+
+  json_to_send = {
+    'username': username,
+    'period_end': period_end
+  };
+  console.log(" per = " + period_end);
+  json_to_send = JSON.stringify(json_to_send);
+  console.log(json_to_send);
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/removeAbsence',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'POST',
+    dataType: 'text',
+    data: json_to_send,
+    success: function (data) {
+      // alert(data);
+      alert("Las ausencia se ha reducido exitosamente.");
       window.location = './nominas.html'
     },
     error: function (error_msg) {
@@ -208,7 +242,7 @@ function getAllInfoNomina(nomina) {
     amountRow.setAttribute('class', 'row');
   
     amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Cantidad</small></div>";
-    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePriceWithZero(amount)+"</small></div>";
+    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(totalAmount)+"</small></div>";
 
     lista.appendChild(amountRow);
 
@@ -235,9 +269,10 @@ function getAllInfoNomina(nomina) {
 
       var employeesRow = document.createElement("div");
       employeesRow.setAttribute('class', 'row');
+
           
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.name +"</small></div>";
-      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.abscences +"</small></div>";
+      employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ employee.absences_counter +"</small></div>";
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.deductions) +"</small></div>";
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.amount) +"</small></div>";
       employeesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(employee.net_pay) +"</small></div>";
@@ -250,8 +285,9 @@ function getAllInfoNomina(nomina) {
       addCol.setAttribute('class', 'col');
       
       var addAbsencesButton = document.createElement("button");
-      addAbsencesButton.setAttribute("id", employee.username);
-      addAbsencesButton.setAttribute("payDate", payDate);
+      addAbsencesButton.setAttribute("id", employee.username+"periodEnd");
+      addAbsencesButton.setAttribute("username", employee.username);
+      addAbsencesButton.setAttribute("periodEnd", periodEnd);
       addAbsencesButton.setAttribute("type", "button");
       addAbsencesButton.setAttribute("class", "btn btn-link");
       addAbsencesButton.setAttribute("onclick","addAbsence(id)");
@@ -260,22 +296,18 @@ function getAllInfoNomina(nomina) {
       var addSpan = document.createElement("span");
       addSpan.setAttribute("class", "fa fa-plus-circle");
 
-      // var terminateEmployeeButton = document.createElement("button");
-      // terminateEmployeeButton.setAttribute("id", username);
-      // terminateEmployeeButton.setAttribute("type", "button");
-      // terminateEmployeeButton.setAttribute("class", "btn btn-link");
-      // terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
-      // terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+      var deleteAbsencesButton = document.createElement("button");
+      deleteAbsencesButton.setAttribute("id", employee.username+"periodEnd");
+      deleteAbsencesButton.setAttribute("username", employee.username);
+      deleteAbsencesButton.setAttribute("periodEnd", periodEnd);
+      deleteAbsencesButton.setAttribute("type", "button");
+      deleteAbsencesButton.setAttribute("class", "btn btn-link");
+      deleteAbsencesButton.setAttribute("onclick","deleteAbsence(id)");
+      deleteAbsencesButton.innerText = "Reducir Ausencia  ";
 
       var deleteCol = document.createElement("div");
       deleteCol.setAttribute('class', 'col');
 
-      var deleteAbsencesButton = document.createElement("button");
-      deleteAbsencesButton.setAttribute("id", employee.username);
-      deleteAbsencesButton.setAttribute("type", "button");
-      deleteAbsencesButton.setAttribute("class", "btn btn-link");
-      // addAbsencesButton.setAttribute("onclick","agregarSalario(id)");
-      deleteAbsencesButton.innerText = "Reducir Ausencia  ";
 
       var deleteSpan = document.createElement("span");
       deleteSpan.setAttribute("class", "fa fa-minus-circle");
@@ -340,6 +372,9 @@ function loadNominas() {
         console.log(data);
 
         $.each(data, function(index, nomina) {
+          $.each(nomina.employees, function(index, employee) {
+            totalAmount +=  parseInt(employee.net_pay);
+            });
           writeNomina(nomina);
         });
 
