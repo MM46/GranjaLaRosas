@@ -42,7 +42,7 @@ router.patch('/updateConcept', auth.auth, auth.admin, concepts.updateConcept);
 
 router.get('/getSiembras', auth.auth, siembras.getSiembras);
 router.post('/addSiembra', auth.auth, siembras.addSiembra);
-router.patch('/removeSiembra', auth.auth, siembras.removeSiembra);
+router.post('/removeSiembra', auth.auth, siembras.removeSiembra);
 router.patch('/updateSiembra', auth.auth, siembras.updateSiembra);
 
 // Report endpoints.
