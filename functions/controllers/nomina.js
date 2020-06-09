@@ -79,7 +79,7 @@ const newPayCycle = function (req, res) {
 
 const addAbsence = function (req, res) {
   const body = req.body;
-  firebase.collection('pay_cycles').doc(body.period_end.toString())
+  db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
       'absences_counter': increment1
     });
@@ -88,7 +88,7 @@ const addAbsence = function (req, res) {
 
 const removeAbsence = function (req, res) {
   const body = req.body;
-  firebase.collection('pay_cycles').doc(body.period_end.toString())
+  db.collection('pay_cycles').doc(body.period_end.toString())
     .collection('employees').doc(body.username).update({
       'absences_counter': decrement1
     });
