@@ -345,17 +345,15 @@ function loadEmpleados() {
       dataType: 'json',
       data: json_to_send,
       success: function (data) {
-        console.log("By Name")
-        console.log(data);
+        console.log(lista.childElementCount);
         loadInitialInfo();
+
         $.each(data, function(index, employee) {
-            writeEmployee(employee);
-            
-        });
-        hideLoading();
-        if(lista.childElementCount == 0){
+          writeEmployee(employee);
+      });
+        if(lista.childElementCount == 2){
           loadEmpleadosByLastName();
-         }
+        }
       },
 
       error: function (error_msg) {
@@ -385,16 +383,49 @@ function loadEmpleados() {
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         });
-        hideLoading();
-        if(lista.childElementCount == 0){
-          console.log("no hay usuarios encontrados");
-         }
+        // hideLoading();
+        if(lista.childElementCount == 2){
+          // loadEmpleadosByUsername();
+          alert("No hay usuarios encontrados.");
+        }
       },
       error: function (error_msg) {
         alert(error_msg['responseText']);
       }
     });
   }
+
+  // function loadEmpleadosByLastName() {
+  //   var lista = document.getElementById("usuarios");
+  //   let username = document.getElementById("searchEmployee").value;
+  //   json_to_send = {
+  //     "username": username
+  //   };
+  //   json_to_send = JSON.stringify(json_to_send);
+  //   $.ajax({
+  //     url: 'https://granjalasrosasback.web.app/getEmployeesByUsername',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': getToken()
+  //     },
+  //     method: 'POST',
+  //     dataType: 'json',
+  //     data: json_to_send,
+  //     success: function (data) {
+  //       loadInitialInfo();
+  //       $.each(data, function(index, employee) {
+  //           writeEmployee(employee);
+  //       });
+  //       // hideLoading();
+  //       if(lista.childElementCount == 2){
+  //         alert("No hay usuarios encontrados.");
+  //       }
+  //     },
+  //     error: function (error_msg) {
+  //       alert(error_msg['responseText']);
+  //     }
+  //   });
+  // }
 
   function loadData() {
     let search = document.getElementById("searchEmployee").value;
@@ -418,19 +449,9 @@ function loadEmpleados() {
   }
   loadEmpleados();
 
-  function myFunction() {
+  function searchFunction() {
     let search = document.getElementById("searchEmployee").value;
       if(search.length == 0){
-        // console.log("leng = " + search.length);
         loadEmpleados();
     }
-    // for (i = 0; i < search.length; i++) {
-    //     a = li[i].getElementsByTagName("a")[0];
-    //     txtValue = a.textContent || a.innerText;
-    //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-    //         li[i].style.display = "";
-    //     } else {
-    //         li[i].style.display = "none";
-    //     }
-    // }
 }

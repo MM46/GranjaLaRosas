@@ -51,6 +51,72 @@ function loadHistorial() {
       console.log("Historial");
       console.log(data);
       var lista = document.getElementById("historial");
+
+      var row = document.createElement("div");
+        row.setAttribute('class', 'row');
+        var dateCol = document.createElement("div");
+        dateCol.setAttribute('class', 'col red');
+        var dateText = document.createElement("p");
+        dateText.setAttribute('class', 'user-label');
+        // dateText.setAttribute('id', index+'date');
+        dateText.innerText = "Inicio Periodo";
+
+        dateCol.appendChild(dateText);
+        row.appendChild(dateCol);
+        lista.appendChild(row);
+
+        var costCol = document.createElement("div");
+        costCol.setAttribute('class', 'col red');
+        var costText = document.createElement("p");
+        costText.setAttribute('class', 'user-label');
+        // dateText.setAttribute('id', index+'date');
+        costText.innerText = "Fin Periodo";
+
+        costCol.appendChild(costText);
+        row.appendChild(costCol);
+        lista.appendChild(row);
+
+        var earningCol = document.createElement("div");
+        earningCol.setAttribute('class', 'col red');
+        var earningText = document.createElement("p");
+        earningText.setAttribute('class', 'user-label');
+        earningText.innerText = "Dia de Pago";
+
+        earningCol.appendChild(earningText);
+        row.appendChild(earningCol);
+        lista.appendChild(row);
+
+
+        var descriptionCol = document.createElement("div");
+        descriptionCol.setAttribute('class', 'col red');
+        var descriptionText = document.createElement("p");
+        descriptionText.setAttribute('class', 'user-label');
+        descriptionText.innerText = "Cantidad";
+
+        descriptionCol.appendChild(descriptionText);
+        row.appendChild(descriptionCol);
+
+        var deductionCol = document.createElement("div");
+        deductionCol.setAttribute('class', 'col red');
+        var deductionText = document.createElement("p");
+        deductionText.setAttribute('class', 'user-label');
+        deductionText.innerText = "Deducciones";
+
+        deductionCol.appendChild(deductionText);
+        row.appendChild(deductionCol);
+
+        var netpayCol = document.createElement("div");
+        netpayCol.setAttribute('class', 'col red');
+        var netpayText = document.createElement("p");
+        netpayText.setAttribute('class', 'user-label');
+        netpayText.innerText = "Pagos Netos";
+
+        netpayCol.appendChild(netpayText);
+        row.appendChild(netpayCol);
+
+
+        lista.appendChild(row);
+
       $.each(data, function(index, historial) {
           var row = document.createElement("div");
           row.setAttribute('class', 'row');
@@ -59,37 +125,37 @@ function loadHistorial() {
           startPeriodCol.setAttribute('class', 'col-md-2');
           var startPeriodText = document.createElement("label");
           startPeriodText.setAttribute('class', 'user-label');
-          startPeriodText.innerText = historial.period_start;
+          startPeriodText.innerText = getPrintableDate(historial.period_start);
 
           var endPeriodCol = document.createElement("div");
           endPeriodCol.setAttribute('class', 'col-md-2');
           var endPeriodText = document.createElement("label");
           endPeriodText.setAttribute('class', 'user-label');
-          endPeriodText.innerText = historial.period_end;
+          endPeriodText.innerText = getPrintableDate(historial.period_end);
 
           var payDateCol = document.createElement("div");
           payDateCol.setAttribute('class', 'col-md-2');
           var payDateText = document.createElement("label");
           payDateText.setAttribute('class', 'user-label');
-          payDateText.innerText = historial.pay_date;
+          payDateText.innerText = getPrintableDate(historial.pay_date);
 
           var amountCol = document.createElement("div");
           amountCol.setAttribute('class', 'col-md-2');
           var amountText = document.createElement("label");
           amountText.setAttribute('class', 'user-label');
-          amountText.innerText = "$ " + historial.amount + ".00";
+          amountText.innerText = getPrintablePrice(historial.amount);
 
           var deductionsCol = document.createElement("div");
           deductionsCol.setAttribute('class', 'col-md-2');
           var deductionsText = document.createElement("label");
           deductionsText.setAttribute('class', 'user-label');
-          deductionsText.innerText = "$ " + historial.deductions + ".00";
+          deductionsText.innerText = getPrintablePrice(historial.deductions);
 
           var netPayCol = document.createElement("div");
           netPayCol.setAttribute('class', 'col-md-2');
           var netPayText = document.createElement("label");
           netPayText.setAttribute('class', 'user-label');
-          netPayText.innerText = "$ " + historial.net_pay + ".00";
+          netPayText.innerText = getPrintablePrice(historial.net_pay);
 
           startPeriodCol.appendChild(startPeriodText);
           row.appendChild(startPeriodCol);
