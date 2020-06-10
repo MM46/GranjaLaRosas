@@ -101,7 +101,8 @@ $('#agregarSiembra').on('click', function () {
       window.location = './sembradios.html'
     },
     error: function (error_msg) {
-      alert((error_msg['responseText']));
+      alert("Todos los campos tienen que estar completos. ");
+      // alert((error_msg['responseText']));
     }
   });
 

@@ -12,6 +12,21 @@ function getPrintableDate(date) {
     + date.substring(0, 4);
 }
 
+function getDateForInput(date) {
+  // 2023-09-07
+  // return date.substring(6, 8) + '-'
+  //   + date.substring(4, 6) + '-'
+  //   + date.substring(0, 4);
+
+    return date.substring(0, 4) + '-'
+    + date.substring(4, 6) + '-'
+    + date.substring(6, 8);
+}
+
+function formatDateForInput(date) {
+  return date.substring(0, 4) + date.substring(5, 7) + date.substring(8, 10);
+}
+
 function getPrintablePrice(price) {
   return "$ " + price + ".00";
 }
@@ -33,6 +48,8 @@ function hideLoading() {
     info.style.display = "block";
   }
 }
+
+
 
 function resetPassword(username) {
   json_to_send = {

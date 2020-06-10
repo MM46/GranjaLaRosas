@@ -105,14 +105,14 @@ function writeNomina(nomina) {
   var periodStart = nomina.period_start;
   var periodEnd = nomina.period_end;
   var payDate = nomina.pay_date;
-  // var amount = nomina.paid;
+  var paid = nomina.paid;
   var employees = nomina.employees;
 
   firstRow.setAttribute('id', "info" + periodStart);
   firstRow.setAttribute('periodStart', periodStart);
   firstRow.setAttribute('periodEnd', periodEnd);
   firstRow.setAttribute('payDate', payDate);
-  // firstRow.setAttribute('amount', amount);
+  firstRow.setAttribute('paid', paid);
   firstRow.setAttribute('employees', JSON.stringify(employees));
 
   var moreInfoButton = document.createElement("button");
@@ -128,7 +128,7 @@ function writeNomina(nomina) {
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodStart)+"</small></div>";
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(periodEnd)+"</small></div>";
   firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(payDate)+"</small></div>";
-  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(totalAmount)+"</small></div>";
+  firstRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(paid)+"</small></div>";
 
   firstRow.innerHTML += "<br>"
   firstRow.innerHTML += "<br>"
@@ -208,7 +208,7 @@ function getAllInfoNomina(nomina) {
   var periodStart = $("#"+nomina).attr("periodStart");
   var periodEnd = $("#"+nomina).attr("periodEnd");
   var payDate = $("#"+nomina).attr("payDate");
-  var amount = $("#"+nomina).attr("amount");
+  var paid = $("#"+nomina).attr("paid");
   var employees = $("#"+nomina).attr("employees");
 
   var lista = document.getElementById("allInfo");
@@ -242,7 +242,7 @@ function getAllInfoNomina(nomina) {
     amountRow.setAttribute('class', 'row');
   
     amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Cantidad</small></div>";
-    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(totalAmount)+"</small></div>";
+    amountRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintablePrice(paid) +"</small></div>";
 
     lista.appendChild(amountRow);
 
@@ -369,22 +369,17 @@ function loadNominas() {
       method: 'GET',
       dataType: 'json',
       success: function (data) {
+        console.log("data");
         console.log(data);
 
         $.each(data, function(index, nomina) {
-          $.each(nomina.employees, function(index, employee) {
-            totalAmount +=  parseInt(employee.net_pay);
-            });
+          // $.each(nomina.employees, function(index, employee) {
+          //   totalAmount += parseInt(employee.net_pay);
+          //   });
           writeNomina(nomina);
         });
 
-        var loading = document.getElementById("loading");
-        var info = document.getElementById("info");
-        var loading = document.getElementById("loading");
-        if (loading.style.display === "block") {
-          loading.style.display = "none";
-          info.style.display = "block";
-        }
+        hideLoading();
       },
 
       error: function (error_msg) {
