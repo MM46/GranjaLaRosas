@@ -1,11 +1,3 @@
-// function myFunction() {
-//     var x = document.getElementById("myTopnav");
-//     if (x.className === "topnav") {
-//       x.className += " responsive";
-//     } else {
-//       x.className = "topnav";
-//     }
-//   }
 
 var token = localStorage.getItem('token');
 if (token) {
@@ -43,27 +35,8 @@ function getLogin() {
     }
 }
   
-// function checkingAdmin() {
-//   $.ajax({
-//     url: 'https://granjalasrosasback.web.app/dummyAdmin',
-//     headers: {
-//       'Content-Type': 'application/json',
-
-//     },
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//       console.log("Eres admin");
-//       // admin = true;
-//     },
-//     error: function (error_msg) {
-//       alert((error_msg['responseText']));
-//     }
-//   });
-// }
 
 getLogin()
-// checkingAdmin()
 
 function getParameters(){
   var parameters = location.search.substring(1).split("&");
@@ -76,9 +49,11 @@ function getParameters(){
 
   temp = parameters[2].split("=");
   planting_date = unescape(temp[1]);
+  planting_date = getDateForInput(planting_date);
 
   temp = parameters[3].split("=");
   harvest_date = unescape(temp[1]);
+  harvest_date = getDateForInput(harvest_date);
 
   temp = parameters[4].split("=");
   progress = unescape(temp[1]);
@@ -111,36 +86,21 @@ $('#guardarCambiosSembradio').on('click', function () {
   let oldHarvest_date = $('#harvest_date').attr("prevValue");
   let oldProgress = $('#progress').attr("prevValue");
 
-
-  console.log("old values");
-  console.log("season = ", oldSeason);
-  console.log("seed = ", oldSeed);
-  console.log("planting_date = ", oldPlanting_date);
-  console.log("harvest_date = ", oldHarvest_date);
-  console.log("progress = ", oldProgress);
-
-  console.log("new values");
-  console.log("season = ", season);
-  console.log("seed = ", seed);
-  console.log("planting_date = ", planting_date);
-  console.log("harvest_date = ", harvest_date);
-  console.log("progress = ", progress);
-
-  // (year * 100 + month) * 100 + day
+  formatDateForInput(oldPlanting_date);
 
   json_to_send = {
     "old": {
       'season': oldSeason,
       'seed': oldSeed,
-      'planting_date': oldPlanting_date,
-      'harvest_date': oldHarvest_date,
+      'planting_date': formatDateForInput(oldPlanting_date),
+      'harvest_date': formatDateForInput(oldHarvest_date),
       'progress': oldProgress
     },
     "new": {
       'season': season,
       'seed': seed,
-      'planting_date': planting_date,
-      'harvest_date': harvest_date,
+      'planting_date': formatDateForInput(planting_date),
+      'harvest_date': formatDateForInput(harvest_date),
       'progress': progress
     }
   };

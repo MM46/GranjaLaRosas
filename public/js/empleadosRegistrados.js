@@ -72,7 +72,9 @@ function getAllInfoEmployee(user) {
   var birth_date = $("#"+user).attr("birth_date");
   birth_date = getPrintableDate(birth_date);
   var hire_date = $("#"+user).attr("hire_date");
-  hire_date = getPrintableDate(hire_date);
+  // hire = hire_date.toString();
+  // console.log("hirrr = " + hire);
+  // hire_date = getPrintableDate(hire);
   var salaries = $("#"+user).attr("salaries");
 
 
@@ -119,7 +121,7 @@ function getAllInfoEmployee(user) {
     hireDateRow.setAttribute('class', 'row');
 
     hireDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">Fecha de Contratación</small></div>";
-    hireDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+hire_date+"</small></div>";
+    hireDateRow.innerHTML += "<div class="+"col"+"><small class="+"title-label"+">"+getPrintableDate(hire_date.toString())+"</small></div>";
     lista.appendChild(hireDateRow);
 
 
@@ -144,7 +146,7 @@ function getAllInfoEmployee(user) {
       var datesRow = document.createElement("div");
       datesRow.setAttribute('class', 'row');
           
-      datesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintableDate(salary.date) +"</small></div>";
+      datesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintableDate(salary.date.toString()) +"</small></div>";
       datesRow.innerHTML += "<div class="+"col red"+"><small class="+"title-label"+">"+ getPrintablePrice(salary.amount) +"</small></div>";
       lista2.appendChild(datesRow);
       });
@@ -181,8 +183,13 @@ function getAllInfoEmployee(user) {
     terminateEmployeeButton.setAttribute("id", username);
     terminateEmployeeButton.setAttribute("type", "button");
     terminateEmployeeButton.setAttribute("class", "btn btn-link");
-    terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
-    terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+    if(status == "Activo"){
+      terminateEmployeeButton.setAttribute("onclick","terminateEmployee(id)");
+      terminateEmployeeButton.innerText = "Dar de Baja a Empleado";
+    }else{
+      terminateEmployeeButton.setAttribute("onclick","rehireEmployee(id)");
+      terminateEmployeeButton.innerText = "Reactivar Empleado";
+    }
     
     var closeButton = document.createElement("button");
     closeButton.setAttribute("type", "button");
@@ -198,6 +205,7 @@ function getAllInfoEmployee(user) {
 function loadInitialInfo(){
 
   var lista = document.getElementById("usuarios");
+  lista.innerHTML = "";
 
   var title = document.createElement("h2");
   title.innerText = "Empleados Registrados"
@@ -239,6 +247,7 @@ function loadEmpleados() {
       dataType: 'json',
       success: function (data) {
         console.log(data);
+        loadInitialInfo();
         $.each(data, function(index, employee) {
           writeEmployee(employee);
         });
@@ -268,6 +277,7 @@ function loadEmpleados() {
       dataType: 'json',
       data: json_to_send,
       success: function (data) {
+        loadInitialInfo();
         console.log("By Name Initial")
         console.log(data);
         $.each(data, function(index, employee) {
@@ -303,6 +313,7 @@ function loadEmpleados() {
       dataType: 'json',
       data: json_to_send,
       success: function (data) {
+        loadInitialInfo();
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         });
@@ -336,6 +347,7 @@ function loadEmpleados() {
       success: function (data) {
         console.log("By Name")
         console.log(data);
+        loadInitialInfo();
         $.each(data, function(index, employee) {
             writeEmployee(employee);
             
@@ -369,6 +381,7 @@ function loadEmpleados() {
       dataType: 'json',
       data: json_to_send,
       success: function (data) {
+        loadInitialInfo();
         $.each(data, function(index, employee) {
             writeEmployee(employee);
         });

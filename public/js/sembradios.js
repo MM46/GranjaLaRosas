@@ -89,12 +89,13 @@ function drawChart() {
 
 function editarSeason(id) {
 
-  var season = document.getElementById(id + 'season').innerText,
-    seed = document.getElementById(id + 'seed').innerText,
-    planting_date = document.getElementById(id + 'planting_date').innerText,
-    harvest_date = document.getElementById(id + 'harvest_date').innerText,
-    progress = document.getElementById(id + 'progress').innerText,
-    url = './editarSembradio.html?season=' + encodeURIComponent(season) + '&seed=' + encodeURIComponent(seed) + '&planting_date=' + encodeURIComponent(planting_date) + '&harvest_date=' + encodeURIComponent(harvest_date) + '&progress=' + encodeURIComponent(progress);
+  var season = $("#"+id).attr("season");
+  var seed = $("#"+id).attr("seed");
+  var planting_date = $("#"+id).attr("planting_date");
+  var harvest_date = $("#"+id).attr("harvest_date");
+  var progress = $("#"+id).attr("progress");
+  
+    var url = './editarSembradio.html?season=' + encodeURIComponent(season) + '&seed=' + encodeURIComponent(seed) + '&planting_date=' + encodeURIComponent(planting_date) + '&harvest_date=' + encodeURIComponent(harvest_date) + '&progress=' + encodeURIComponent(progress);
   document.location.href = url;
 }
 
@@ -138,6 +139,11 @@ function loadSiembras() {
           editCol.setAttribute('class', 'btn btn-info btn-lg');
           editCol.setAttribute('style', "display: block;");
           editCol.setAttribute('id', index + "" + index2);
+          editCol.setAttribute('season', siembras[0].season);
+          editCol.setAttribute('seed', siembra.seed);
+          editCol.setAttribute('planting_date', siembra.planting_date);
+          editCol.setAttribute('harvest_date', siembra.harvest_date);
+          editCol.setAttribute('progress', siembra.progress);
           editCol.setAttribute("onclick", "editarSeason(id)");
           var editSpan = document.createElement("span");
           editSpan.setAttribute('class', 'fa fa-pencil');
@@ -181,6 +187,7 @@ function loadSiembras() {
           secondRow.innerHTML += "<div class=" + "col" + "><label class=" + "title-label" + ">" + getPrintableDate(siembra.planting_date) + "</label></div>";
           secondRow.innerHTML += "<div class=" + "col" + "><label class=" + "title-label" + ">" + getPrintableDate(siembra.harvest_date) + "</label></div>";
 
+          
           divRow1.appendChild(firstRow1);
           divRow1.appendChild(secondRow);
           container.appendChild(divRow1);
@@ -206,7 +213,8 @@ function loadSiembras() {
 
           var progressText = document.createElement("h4");
           // progressText.setAttribute('class', 'title-label');
-          progressText.setAttribute('id', index + "" + index2 + "progress");
+          
+          // progressText.setAttribute('id', index + "" + index2 + "progress");
           progressText.setAttribute('style', "display: none");
           progressText.innerText = siembra.progress;
 

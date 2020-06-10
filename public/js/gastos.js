@@ -136,11 +136,11 @@ function loadGastos() {
     "from": parseInt(from),
     "to": parseInt(to)
   };
-
+  // showLoading();
   json_to_send = JSON.stringify(json_to_send);
   console.log(json_to_send);
     $.ajax({
-      url: 'https://granjalasrosasback.web.app/getExpensesReport',
+      url: 'https://granjalasrosasback.web.app/getConceptsReport',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token
@@ -152,6 +152,7 @@ function loadGastos() {
         // console.log("Gastos");
         console.log(data);
         var lista = document.getElementById("gastos");
+        lista.innerHTML = "";
 
         var title = document.createElement("h2");
         title.innerText = "Gastos"
@@ -177,7 +178,7 @@ function loadGastos() {
         secondRow.setAttribute("class", "row");
       
         secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.earnings) +"</label></div>";
-        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePriceWithZero(data.expenses) +"</label></div>";
+        secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.expenses) +"</label></div>";
         secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.net) +"</label></div>";
 
         divRow.appendChild(firstRow);
@@ -266,7 +267,11 @@ function loadGastos() {
             var costText2 = document.createElement("p");
             costText2.setAttribute('class', 'user-label');
             costText2.setAttribute('id', index+'cost');
-            costText2.innerText = "$ " + gasto.cost;
+            if(gasto.earning){
+              costText2.innerText = "$ 0.00" ;
+            }else{
+              costText2.innerText = getPrintablePrice(gasto.cost);
+            }
 
             costCol2.appendChild(costText2);
             row2.appendChild(costCol2);
@@ -278,9 +283,10 @@ function loadGastos() {
             earningText2.setAttribute('class', 'user-label');
             earningText2.setAttribute('id', index+'earning');
             if(gasto.earning){
-              earningText2.innerText = "$ " + gasto.earning + ".00";
+              earningText2.innerText = getPrintablePrice(gasto.cost);
+              // earningText2.innerText = "$ " + gasto.earning + ".00";
             }else{
-              earningText2.innerText = "$ 0.00" ;
+              earningText2.innerText = getPrintablePrice(0);
             }
 
             earningCol2.appendChild(earningText2);
@@ -301,13 +307,7 @@ function loadGastos() {
 
            });
         })
-        var loading = document.getElementById("loading");
-        var info = document.getElementById("info");
-        var loading = document.getElementById("loading");
-        // if (loading.style.display == "block") {
-          loading.style.display = "block";
-        //   info.style.display = "block";
-        // }
+        hideLoading();
       },
 
       error: function (error_msg) {

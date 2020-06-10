@@ -64,21 +64,27 @@ $('#agregarGasto').on('click', function () {
   let inputDate = $('#date').val();
   let description = $('#description').val();
   let cost = $('#cost').val();
+  let earningBool = $('#earning').val();
+  let earning = false;
 
-  let year = inputDate.substring(0, 4);  
-  let month = inputDate.substring(5, 7); 
-  let day = inputDate.substring(8, 10);
+  if (earningBool == "true"){
+    earning = true;
+  }
+  // console.log("earrr = "+ earning);
 
-  let date = year + month + day;
 
   json_to_send = {
-    "date": parseInt(date),
+    "date": formatDate(inputDate),
     "description": description,
-    "cost" : cost,
-    "earning" : false,
+    "cost" : parseInt(cost),
+    "earning" : earning,
   };
 
   json_to_send = JSON.stringify(json_to_send);
+  // console.log("date = " + formatDate(inputDate));
+  // console.log("desc = " + description);
+  // console.log("cost = " + parseInt(cost));
+  // console.log(earning);
 
   $.ajax({
     url: 'https://granjalasrosasback.web.app/addConcept',

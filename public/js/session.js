@@ -127,3 +127,33 @@ console.log("usss = " + username);
   });
 
 }
+
+function rehireEmployee(username) {
+
+  json_to_send = {
+    "username": username
+  };
+console.log("usss = " + username);
+  json_to_send = JSON.stringify(json_to_send);
+
+  $.ajax({
+    url: 'https://granjalasrosasback.web.app/rehireEmployee',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    method: 'PATCH',
+    dataType: 'json',
+    data: json_to_send,
+    success: function (data) {
+      // alert("El usuario " + username + " se ha dado de baja exitosamente");
+      // window.location = './empleadosRegistrados.html';
+    },
+    error: function (error_msg) {
+      // alert((error_msg['responseText']));
+      alert("El usuario " + username + " se ha dado recontratado exitosamente");
+      window.location = './empleadosRegistrados.html';
+    }
+  });
+
+}
