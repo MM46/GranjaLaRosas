@@ -154,7 +154,7 @@ function loadGastos() {
         var lista = document.getElementById("gastos");
 
         var title = document.createElement("h2");
-        title.innerText = "Empleados Registrados"
+        title.innerText = "Gastos"
       
         var ul = document.createElement("ul");
         ul.setAttribute("class","list-group list-group-flush");
