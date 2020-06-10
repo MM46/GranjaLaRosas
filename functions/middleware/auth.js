@@ -25,11 +25,28 @@ const admin = function (req, res, next) {
   if (req.user.role == 'admin') {
     next();
   } else {
-    return res.status(500).send('El usuario no tiene permiso de administrador');
+    return res.status(400).send('El usuario no tiene permiso de administrador');
+  }
+}
+
+const active = function (req, res, next) {
+  const user = req.user;
+  if (user.role == 'employee') {
+    db.collection('employees').doc(req.user.username).get().then(function (doc) {
+      const employee = doc.data();
+      if (employee.active) {
+        next();
+      } else {
+        return res.status(400).send('El empleado ya no está activo');
+      }
+    });
+  } else {
+    next();
   }
 }
 
 module.exports = {
   auth: auth,
-  admin: admin
+  admin: admin,
+  active: active
 }

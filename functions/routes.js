@@ -40,10 +40,10 @@ router.post('/addConcept', auth.auth, auth.admin, concepts.addConcept);
 router.patch('/removeConcept', auth.auth, auth.admin, concepts.removeConcept);
 router.patch('/updateConcept', auth.auth, auth.admin, concepts.updateConcept);
 
-router.get('/getSiembras', auth.auth, siembras.getSiembras);
-router.post('/addSiembra', auth.auth, siembras.addSiembra);
-router.patch('/removeSiembra', auth.auth, siembras.removeSiembra);
-router.patch('/updateSiembra', auth.auth, siembras.updateSiembra);
+router.get('/getSiembras', auth.auth, auth.active, siembras.getSiembras);
+router.post('/addSiembra', auth.auth, auth.active, siembras.addSiembra);
+router.patch('/removeSiembra', auth.auth, auth.active, siembras.removeSiembra);
+router.patch('/updateSiembra', auth.auth, auth.active, siembras.updateSiembra);
 
 // Report endpoints.
 
@@ -54,11 +54,11 @@ router.post('/getEarningsReport', auth.auth, auth.admin,
 router.post('/getExpensesReport', auth.auth, auth.admin,
   concept_reports.getExpensesReport);
 
-router.post('/getSiembrasBySeason', auth.auth,
+router.post('/getSiembrasBySeason', auth.auth, auth.active,
   siembra_reports.getSiembrasBySeason);
-router.post('/getSiembrasByPlantingDate', auth.auth,
+router.post('/getSiembrasByPlantingDate', auth.auth, auth.active,
   siembra_reports.getSiembrasByPlantingDate);
-router.post('/getSiembrasByHarvestDate', auth.auth,
+router.post('/getSiembrasByHarvestDate', auth.auth, auth.active,
   siembra_reports.getSiembrasByHarvestDate);
 
 router.get('/getAllEmployees', auth.auth, auth.admin,
