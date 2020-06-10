@@ -32,7 +32,7 @@ const admin = function (req, res, next) {
 const active = function (req, res, next) {
   const user = req.user;
   if (user.role == 'employee') {
-    db.collection('employees').doc(req.user.username).get().then(function (doc) {
+    db.collection('employees').doc(user.username).get().then(function (doc) {
       const employee = doc.data();
       if (employee.active) {
         next();
