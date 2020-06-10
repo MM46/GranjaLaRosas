@@ -12,9 +12,9 @@ function getEmployees(condition) {
       })
       resolve(employees.sort(function (a, b) {
         if (a.active && !b.active) {
-          return 1;
-        } else if (!a.active && b.active) {
           return -1;
+        } else if (!a.active && b.active) {
+          return 1;
         }
         return a.name.localeCompare(b.name);
       }));
