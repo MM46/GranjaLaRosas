@@ -40,7 +40,7 @@ getLogin()
 
 function loadHistorial() {
   $.ajax({
-    url: 'https://granjalasrosasback.web.app/getMyPayHistory',
+    url: 'https://granjalasrosasback.web.app/getMyFullPayHistory',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': token

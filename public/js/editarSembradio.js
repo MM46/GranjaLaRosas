@@ -129,11 +129,7 @@ $('#guardarCambiosSembradio').on('click', function () {
 });
 
 $('#eliminarSembradio').on('click', function () {
-  // let season = $('#season').val();
-  // let seed = $('#seed').val();
-  // let planting_date = $('#planting_date').val();
-  // let harvest_date = $('#harvest_date').val();
-  // let progress = $('#progress').val();
+
   var alertconfirm = confirm("¿Estas seguro que deseas borrar este Sembradío?");
 
     if(alertconfirm == true){
@@ -143,8 +139,6 @@ $('#eliminarSembradio').on('click', function () {
     let oldHarvest_date = $('#harvest_date').attr("prevValue");
     let oldProgress = $('#progress').attr("prevValue");
 
-
-    // (year * 100 + month) * 100 + day
 
     json_to_send = {
         'season': season,

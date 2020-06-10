@@ -25,6 +25,7 @@ $('#login_button').on('click', function () {
     },
     error: function (error_msg) {
       alert(error_msg['responseText']);
+      // alert("Hay un problema con el servidor vuelva a iniciar sesion mas tarde.");
     }
   });
 });
