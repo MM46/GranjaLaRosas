@@ -82,7 +82,7 @@ $('#registrar_button').on('click', function () {
     "lastname2" : lastname2,
     "birth_date" : birth_date,
     "hire_date" : hire_date,
-    "salary" : salary
+    "salary" : parseInt(salary)
   };
 
   json_to_send = JSON.stringify(json_to_send);
@@ -108,3 +108,10 @@ $('#registrar_button').on('click', function () {
   });
 
 });
+
+function allInputs(){
+  inputs("salary");
+}
+
+
+allInputs();

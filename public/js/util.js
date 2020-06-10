@@ -78,3 +78,23 @@ function resetPassword(username) {
     }
   });
 }
+
+function allInputs(){
+  inputs("salary");
+}
+
+function inputs(id){
+  var id = document.getElementById(id);
+
+  var invalidChars = [
+    "-",
+    "+",
+    "e",
+  ];
+  
+  id.addEventListener("keydown", function(e) {
+    if (invalidChars.includes(e.key)) {
+      e.preventDefault();
+    }
+  });
+}

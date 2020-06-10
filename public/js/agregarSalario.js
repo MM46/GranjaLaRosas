@@ -71,3 +71,9 @@ $('#agregarSalario').on('click', function () {
   });
 
 });
+
+function allInputs(){
+  inputs("salary");
+}
+
+allInputs();

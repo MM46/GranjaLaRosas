@@ -114,7 +114,7 @@ function removerGasto(id) {
 }
 
 
-function loadGastos() {
+function loadGastosByDate() {
 
   let fromDate = $('#from').val();
   let toDate = $('#to').val();
@@ -153,7 +153,7 @@ function loadGastos() {
         console.log(data);
         var lista = document.getElementById("gastos");
         lista.innerHTML = "";
-
+        lista.innerHTML += "<hr>";
         var title = document.createElement("h2");
         title.innerText = "Gastos"
       
@@ -307,7 +307,7 @@ function loadGastos() {
 
            });
         })
-        hideLoading();
+        // hideLoading();
       },
 
       error: function (error_msg) {
@@ -315,8 +315,185 @@ function loadGastos() {
       }
     });
   }
+  function loadGastos() {
 
+ 
+      $.ajax({
+        url: 'https://granjalasrosasback.web.app/getConcepts',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+          // console.log("Gastos");
+          console.log(data);
+          var lista = document.getElementById("gastos");
+          lista.innerHTML = "";
+  
+          var title = document.createElement("h2");
+          title.innerText = "Gastos"
+        
+          var ul = document.createElement("ul");
+          ul.setAttribute("class","list-group list-group-flush");
+        
+          var container = document.createElement("div");
+          container.setAttribute("class","container");
+        
+          var divRow = document.createElement("div");
+          divRow.setAttribute("id", "info-usuarios");
+        
+          var firstRow = document.createElement("div");
+          firstRow.setAttribute("class", "row");
+        
+          divRow.innerHTML += "<hr>"
+          // firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Ingresos</label></div>";
+          // firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Gastos</label></div>";
+          // firstRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">Utilidad Neta</label></div>";
+  
+          // var secondRow = document.createElement("div");
+          // secondRow.setAttribute("class", "row");
+        
+          // secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.earnings) +"</label></div>";
+          // secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.expenses) +"</label></div>";
+          // secondRow.innerHTML += "<div class="+"col"+"><label class="+"title-label"+">" + getPrintablePrice(data.net) +"</label></div>";
+  
+          divRow.appendChild(firstRow);
+          // divRow.appendChild(secondRow);
+          container.appendChild(divRow);
+          ul.appendChild(container);
+        
+          lista.appendChild(title);
+          lista.appendChild(ul);
+          
+          var row = document.createElement("div");
+          row.setAttribute('class', 'row');
+          var dateCol = document.createElement("div");
+          dateCol.setAttribute('class', 'col red');
+          var dateText = document.createElement("p");
+          dateText.setAttribute('class', 'user-label');
+          // dateText.setAttribute('id', index+'date');
+          dateText.innerText = "Fecha";
+  
+          dateCol.appendChild(dateText);
+          row.appendChild(dateCol);
+          lista.appendChild(row);
+  
+          var costCol = document.createElement("div");
+          costCol.setAttribute('class', 'col red');
+          var costText = document.createElement("p");
+          costText.setAttribute('class', 'user-label');
+          // dateText.setAttribute('id', index+'date');
+          costText.innerText = "Costo";
+  
+          costCol.appendChild(costText);
+          row.appendChild(costCol);
+          lista.appendChild(row);
+  
+          var earningCol = document.createElement("div");
+          earningCol.setAttribute('class', 'col red');
+          var earningText = document.createElement("p");
+          earningText.setAttribute('class', 'user-label');
+          earningText.innerText = "Ganancias";
+  
+          earningCol.appendChild(earningText);
+          row.appendChild(earningCol);
+          lista.appendChild(row);
+  
+  
+          var descriptionCol = document.createElement("div");
+          descriptionCol.setAttribute('class', 'col red');
+          var descriptionText = document.createElement("p");
+          descriptionText.setAttribute('class', 'user-label');
+          descriptionText.innerText = "Descripción";
+  
+          descriptionCol.appendChild(descriptionText);
+          row.appendChild(descriptionCol);
+          lista.appendChild(row);
+          
+  
+          $.each(data, function(index, gastos) {
+              // console.log(gastos.date);
+  
+            $.each(gastos, function(index2, gasto) {
+              var row2 = document.createElement("div");
+              row2.setAttribute('class', 'row');
+              var dateCol2 = document.createElement("div");
+              dateCol2.setAttribute('class', 'col');
+              var dateText2 = document.createElement("p");
+              dateText2.setAttribute('class', 'user-label');
+              dateText2.setAttribute('id', index+'date');
+  
+               let date = gasto.date;
+            
+               let day = date%100;
+               date = parseInt(date/100);
+               let month = date%100;
+               let year = parseInt(date/100);
+            
+              date = day +"/"+ month +"/"+ year;
+  
+              dateText2.innerText = date;
+  
+              dateCol2.appendChild(dateText2);
+              row2.appendChild(dateCol2);
+              lista.appendChild(row2);
+  
+              var costCol2 = document.createElement("div");
+              costCol2.setAttribute('class', 'col');
+              var costText2 = document.createElement("p");
+              costText2.setAttribute('class', 'user-label');
+              costText2.setAttribute('id', index+'cost');
+              if(gasto.earning){
+                costText2.innerText = "$ 0.00" ;
+              }else{
+                costText2.innerText = getPrintablePrice(gasto.cost);
+              }
+  
+              costCol2.appendChild(costText2);
+              row2.appendChild(costCol2);
+              lista.appendChild(row2);
+  
+              var earningCol2 = document.createElement("div");
+              earningCol2.setAttribute('class', 'col');
+              var earningText2 = document.createElement("p");
+              earningText2.setAttribute('class', 'user-label');
+              earningText2.setAttribute('id', index+'earning');
+              if(gasto.earning){
+                earningText2.innerText = getPrintablePrice(gasto.cost);
+                // earningText2.innerText = "$ " + gasto.earning + ".00";
+              }else{
+                earningText2.innerText = getPrintablePrice(0);
+              }
+  
+              earningCol2.appendChild(earningText2);
+              row2.appendChild(earningCol2);
+              lista.appendChild(row2);
+  
+  
+              var descriptionCol2 = document.createElement("div");
+              descriptionCol2.setAttribute('class', 'col');
+              var descriptionText2 = document.createElement("p");
+              descriptionText2.setAttribute('class', 'user-label');
+              descriptionText2.setAttribute('id', index+'description');
+              descriptionText2.innerText = gasto.description;
+  
+              descriptionCol2.appendChild(descriptionText2);
+              row2.appendChild(descriptionCol2);
+              lista.appendChild(row2);
+  
+             });
+          })
+          // hideLoading();
+        },
+  
+        error: function (error_msg) {
+          alert((error_msg['responseText']));
+        }
+      });
+    }
 
-  // loadGastos()
+  loadGastos()
 
 

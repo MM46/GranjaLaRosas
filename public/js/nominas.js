@@ -93,8 +93,9 @@ function loadInitialInfo(){
   lista.appendChild(ul);
 }
 
-loadInitialInfo()
-var totalAmount = 0;
+hideLoading();
+loadInitialInfo();
+
 function writeNomina(nomina) {
   var lista = document.getElementById("nominas");
 
@@ -108,7 +109,7 @@ function writeNomina(nomina) {
   var paid = nomina.paid;
   var employees = nomina.employees;
 
-  firstRow.setAttribute('id', "info" + periodStart);
+  firstRow.setAttribute('id', "info" + periodStart+periodEnd);
   firstRow.setAttribute('periodStart', periodStart);
   firstRow.setAttribute('periodEnd', periodEnd);
   firstRow.setAttribute('payDate', payDate);
@@ -116,7 +117,7 @@ function writeNomina(nomina) {
   firstRow.setAttribute('employees', JSON.stringify(employees));
 
   var moreInfoButton = document.createElement("button");
-  moreInfoButton.setAttribute("id", "info" + periodStart);
+  moreInfoButton.setAttribute("id", "info" + periodStart+periodEnd);
   moreInfoButton.setAttribute("type", "button");
   moreInfoButton.setAttribute("class", "btn btn-light btn-block");
   moreInfoButton.setAttribute("onclick","getAllInfoNomina(id)");

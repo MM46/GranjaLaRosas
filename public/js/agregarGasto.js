@@ -81,12 +81,8 @@ $('#agregarGasto').on('click', function () {
   };
 
   json_to_send = JSON.stringify(json_to_send);
-  // console.log("date = " + formatDate(inputDate));
-  // console.log("desc = " + description);
-  // console.log("cost = " + parseInt(cost));
-  // console.log(earning);
-
-  $.ajax({
+if(inputDate != "" && description != "" && cost != ""){
+   $.ajax({
     url: 'https://granjalasrosasback.web.app/addConcept',
     headers: {
       'Content-Type': 'application/json',
@@ -104,5 +100,16 @@ $('#agregarGasto').on('click', function () {
       alert((error_msg['responseText']));
     }
   });
+}else{
+  alert("Algun campo esta incompleto.");
+}
+
 
 });
+
+
+function allInputs(){
+  inputs("cost");
+}
+
+allInputs();

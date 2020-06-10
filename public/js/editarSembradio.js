@@ -176,3 +176,10 @@ $('#eliminarSembradio').on('click', function () {
     });
   }
 });
+
+
+function allInputs(){
+  inputs("progress");
+}
+
+allInputs();
