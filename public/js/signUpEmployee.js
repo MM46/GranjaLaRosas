@@ -59,7 +59,7 @@ function getMyEmployee() {
       birthdateCol.setAttribute('class', 'col-md-12');
       var birthdateText = document.createElement("label");
       birthdateText.setAttribute('class', 'user-label');
-      birthdateText.innerText = data.birth_date;
+      birthdateText.innerText = getPrintableDate(data.birth_date);
 
       birthdateCol.appendChild(birthdateText);
       birthdate.appendChild(birthdateCol);
@@ -70,7 +70,7 @@ function getMyEmployee() {
       hiredateCol.setAttribute('class', 'col-md-12');
       var hiredateText = document.createElement("label");
       hiredateText.setAttribute('class', 'user-label');
-      hiredateText.innerText = data.hire_date;
+      hiredateText.innerText = getPrintableDate(data.hire_date);
 
       hiredateCol.appendChild(hiredateText);
       hiredate.appendChild(hiredateCol);
@@ -84,7 +84,7 @@ function getMyEmployee() {
         amountCol.setAttribute('class', 'col-md-6');
         var amountText = document.createElement("label");
         amountText.setAttribute('class', 'user-label');
-        amountText.innerText = "$ " + salarios.amount + ".00";
+        amountText.innerText = getPrintablePrice(salarios.amount);
   
         amountCol.appendChild(amountText);
         amount.appendChild(amountCol);
@@ -94,7 +94,7 @@ function getMyEmployee() {
         dateCol.setAttribute('class', 'col-md-6');
         var dateText = document.createElement("label");
         dateText.setAttribute('class', 'user-label');
-        dateText.innerText = salarios.date;
+        dateText.innerText = getPrintableDate(salarios.date);
   
         dateCol.appendChild(dateText);
         date.appendChild(dateCol);  
