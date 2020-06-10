@@ -113,10 +113,8 @@ function extractEmployees(pay_cycle) {
         const aux = new Promise(function (resolve, reject) {
           querySnapshot.forEach(function (doc) {
             const employee = doc.data();
-            if (employee.active) {
-              pay_cycle.employees.push(employee);
-              pay_cycle.paid = pay_cycle.paid + employee.net_pay;
-            }
+            pay_cycle.employees.push(employee);
+            pay_cycle.paid = pay_cycle.paid + employee.net_pay;
             if (index == querySnapshot.size) {
               resolve();
             }
