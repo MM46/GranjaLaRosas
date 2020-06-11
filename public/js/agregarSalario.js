@@ -46,7 +46,7 @@ $('#agregarSalario').on('click', function () {
   json_to_send = {
     'username': username,
     'date': date,
-    'salary': salary
+    'salary': parseInt(salary)
   };
 
   json_to_send = JSON.stringify(json_to_send);
